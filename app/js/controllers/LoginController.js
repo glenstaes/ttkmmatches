@@ -6,6 +6,9 @@
         // Redirect to the home page if the user is logged in already
         UserService.redirectIfLoggedIn();
 
+        // Declaration
+        ctrl.querying = false;          // Keeps track whether an api call is being made
+
         /**
          * @function ctrl.login 
          * @description Tries to login the user with the UserService.
@@ -17,7 +20,8 @@
 
                 // Show the toast
                 $mdToast.show(toast);
-            } else
+            } else {
+                ctrl.querying = true;
                 UserService.login(ctrl.user.loginName, ctrl.user.password).then(function (response) {
                     if (UserService.isLoggedIn()) {
                         // Create a toast that welcomes the user.
@@ -36,7 +40,10 @@
                         // Show the toast
                         $mdToast.show(toast);
                     }
+                }).finally(function(){
+                    ctrl.querying = false;   
                 });
+            }
         };
 
         /**

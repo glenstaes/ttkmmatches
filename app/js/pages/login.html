@@ -3,20 +3,21 @@
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">Login</span>
+                <md-progress-linear ng-if="LoginCtrl.querying" md-mode="query"></md-progress-linear>
             </md-card-title-text>
         </md-card-title>
         <md-card-content>
             <md-input-container class="md-block">
                 <label>Emailadres *</label>
-                <input ng-model="LoginCtrl.user.loginName" ng-keypress="LoginCtrl.onInputKeypress($event)" />
+                <input ng-model="LoginCtrl.user.loginName" ng-disabled="LoginCtrl.querying" ng-keypress="LoginCtrl.onInputKeypress($event)" />
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Wachtwoord *</label>
-                <input type="password" ng-model="LoginCtrl.user.password" ng-keypress="LoginCtrl.onInputKeypress($event)" />
+                <input type="password" ng-model="LoginCtrl.user.password" ng-disabled="LoginCtrl.querying" ng-keypress="LoginCtrl.onInputKeypress($event)" />
             </md-input-container>
         </md-card-content>
         <md-card-actions>
-            <md-button ng-click="LoginCtrl.login()" class="md-raised md-primary"><i class="fa fa-sign-in"></i> Inloggen</md-button>
+            <md-button ng-disabled="LoginCtrl.querying" ng-click="LoginCtrl.login()" class="md-raised md-primary"><i class="fa fa-sign-in"></i> Inloggen</md-button>
             <md-button><i class="fa fa-question"></i> Wachtwoord vergeten</md-button>
         </md-card-actions>
     </md-card>
