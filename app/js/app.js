@@ -8,6 +8,9 @@
             // Set the default application theme
             $mdThemingProvider.theme("default").primaryPalette("red").accentPalette("indigo");
 
+            $mdThemingProvider.theme("success-toast");
+            $mdThemingProvider.theme("error-toast");
+
             // Configure the routes
             $routeProvider.when("/", {
                 controller: "SiteController"

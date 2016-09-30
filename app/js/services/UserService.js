@@ -38,11 +38,15 @@
 
             $http.post(Api.getEndpoint("login"), JSON.stringify({ email: email, password: password }))
                 .then(function (response) {
-                    if (angular.isDefined(response.data.token)) {
+                    if (angular.isDefined(response.data.token) && response.data.user.confirmed) {
                         // Success response
                         userToken = response.data.token;
+                        deferred.resolve(response.data);
+                    } else {
+                        if (angular.isDefined(response.data.user))
+                            response.data.error = { code: "user-not-confirmed" };
+                        deferred.reject(response.data);
                     }
-                    deferred.resolve(response.data);
                 })
                 .catch(function (error) {
                     deferred.reject(error);

@@ -7,14 +7,13 @@
         </md-card-title>
         <md-card-content>
             <md-input-container class="md-block">
-                <label>Gebruikersnaam</label>
+                <label>Emailadres *</label>
                 <input ng-model="LoginCtrl.user.loginName" />
             </md-input-container>
             <md-input-container class="md-block">
-                <label>Wachtwoord</label>
+                <label>Wachtwoord *</label>
                 <input type="password" ng-model="LoginCtrl.user.password" />
             </md-input-container>
-            {{LoginCtrl.UserService.isLoggedIn()}}
         </md-card-content>
         <md-card-actions>
             <md-button ng-click="LoginCtrl.login()" class="md-raised md-primary"><i class="fa fa-sign-in"></i> Inloggen</md-button>
