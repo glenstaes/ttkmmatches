@@ -13,7 +13,9 @@
 
             // Configure the routes
             $routeProvider.when("/", {
-                controller: "SiteController"
+                controller: "DashboardController",
+                controllerAs: "DashboardCtrl",
+                templateUrl: "app/js/pages/dashboard.html"
             }).when("/login", {
                 controller: "LoginController",
                 controllerAs: "LoginCtrl",

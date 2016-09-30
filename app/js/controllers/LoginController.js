@@ -3,7 +3,8 @@
     var LoginController = function ($mdToast, UserService, ErrorService) {
         var ctrl = this;
 
-        // TODO: Redirect to the home page if the user is logged in already
+        // Redirect to the home page if the user is logged in already
+        UserService.redirectIfLoggedIn();
 
         // Mockout the user
         ctrl.user = {
@@ -23,6 +24,8 @@
 
                     // Show the toast
                     $mdToast.show(toast);
+
+                    UserService.redirectIfLoggedIn();
                 }
             }).catch(function (response) {
                 if(angular.isDefined(response.error)){

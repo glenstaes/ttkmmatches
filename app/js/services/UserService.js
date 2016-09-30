@@ -1,6 +1,6 @@
 (function () {
 
-    var UserService = function ($http, $location, $q, Api) {
+    var UserService = function ($http, $location, $q, $window, Api) {
         // Declaration
         var userToken = "";         // Local copy of the user token
         var user = {};              // Local copy of the user
@@ -14,6 +14,14 @@
          * it assumes that the user is logged in.
          */
         us.isLoggedIn = function () {
+            if(userToken !== null && userToken !== "")
+                return true;
+            
+            // Check the session storage for a token
+            if($window.sessionStorage.getItem("matches_token")){
+                userToken = $window.sessionStorage.getItem("matches_token");
+            }
+
             return userToken !== null && userToken !== "";
         };
 
@@ -25,6 +33,15 @@
             if (!us.isLoggedIn())
                 $location.path("/login");
         };
+
+        /**
+         * @function redirectIfLoggedIn
+         * @description Redirects the user to the dashboard if he is logged in.
+         */
+        us.redirectIfLoggedIn = function(){
+            if(us.isLoggedIn())
+                $location.path("/dashboard");
+        }
 
         /**
          * @function login
@@ -41,6 +58,7 @@
                     if (angular.isDefined(response.data.token) && response.data.user.confirmed) {
                         // Success response
                         userToken = response.data.token;
+                        $window.sessionStorage.setItem("matches_token", userToken);
                         deferred.resolve(response.data);
                     } else {
                         if (angular.isDefined(response.data.user))
@@ -59,5 +77,5 @@
         return us;
     };
 
-    angular.module("matches").factory("UserService", ["$http", "$location", "$q", "ApiService", UserService]);
+    angular.module("matches").factory("UserService", ["$http", "$location", "$q", "$window", "ApiService", UserService]);
 })();
