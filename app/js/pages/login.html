@@ -1,0 +1,24 @@
+<md-content layout="row" layout-align="center center" layout-padding flex>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Login</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <md-input-container class="md-block">
+                <label>Gebruikersnaam</label>
+                <input ng-model="LoginCtrl.user.loginName" />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Wachtwoord</label>
+                <input type="password" ng-model="LoginCtrl.user.password" />
+            </md-input-container>
+            {{LoginCtrl.UserService.isLoggedIn()}}
+        </md-card-content>
+        <md-card-actions>
+            <md-button ng-click="LoginCtrl.login()" class="md-raised md-primary"><i class="fa fa-sign-in"></i> Inloggen</md-button>
+            <md-button><i class="fa fa-question"></i> Wachtwoord vergeten</md-button>
+        </md-card-actions>
+    </md-card>
+</md-content>
