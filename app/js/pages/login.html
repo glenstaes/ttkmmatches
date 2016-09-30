@@ -8,11 +8,11 @@
         <md-card-content>
             <md-input-container class="md-block">
                 <label>Emailadres *</label>
-                <input ng-model="LoginCtrl.user.loginName" />
+                <input ng-model="LoginCtrl.user.loginName" ng-keypress="LoginCtrl.onInputKeypress($event)" />
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Wachtwoord *</label>
-                <input type="password" ng-model="LoginCtrl.user.password" />
+                <input type="password" ng-model="LoginCtrl.user.password" ng-keypress="LoginCtrl.onInputKeypress($event)" />
             </md-input-container>
         </md-card-content>
         <md-card-actions>
