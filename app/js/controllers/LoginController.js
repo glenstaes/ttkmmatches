@@ -6,12 +6,6 @@
         // Redirect to the home page if the user is logged in already
         UserService.redirectIfLoggedIn();
 
-        // Mockout the user
-        ctrl.user = {
-            loginName: "staeseke@gmail.com",
-            password: "test"
-        }
-
         /**
          * @function login 
          * @description Tries to login the user with the UserService.

@@ -73,6 +73,16 @@
             return deferred.promise;
         };
 
+        /**
+         * @function logout
+         * @description Logs out the user. It is sufficient to only remove the local copies of the session.
+         */
+        us.logout = function(){
+            userToken = "";
+            user = {};
+            $window.sessionStorage.removeItem("matches_token");
+        }
+
         // Return the service functionality
         return us;
     };

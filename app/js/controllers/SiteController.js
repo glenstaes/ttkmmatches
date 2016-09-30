@@ -12,7 +12,7 @@
         ctrl.generalNavItems = [{
             icon: "fa-home",
             link: "/",
-            label: "Startpagina"
+            label: "Dashboard"
         }, {
                 icon: "fa-list",
                 link: "/",
@@ -58,6 +58,15 @@
             if (angular.isDefined(menuItem) && menuItem !== null)
                 $location.path(menuItem.link);
         };
+
+        /**
+         * @function ctrl.logout
+         * @description Tries to logout the user
+         */
+        ctrl.logout = function(){
+            UserService.logout();
+            UserService.redirectIfNotLoggedIn();
+        }
     };
 
     angular.module("matches").controller("SiteController", ["$mdMedia", "$mdSidenav", "$location", "UserService", SiteController]);
