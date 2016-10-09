@@ -9,6 +9,16 @@
         var us = {};
 
         /**
+         * @function setUserToken
+         * @description Sets the user token variable of the service with a user token.
+         * @param {String} value - The value to set as the user token.
+         */
+        us.setUserToken = function(value){
+            userToken = value;
+            $window.sessionStorage.setItem("matches_token", userToken);
+        };
+
+        /**
          * @function isLoggedIn
          * @description Checks whether the user is logged in. If the service doesn't know about a user token
          * it assumes that the user is logged in.
@@ -19,7 +29,7 @@
             
             // Check the session storage for a token
             if($window.sessionStorage.getItem("matches_token")){
-                userToken = $window.sessionStorage.getItem("matches_token");
+                us.setUserToken($window.sessionStorage.getItem("matches_token"));
             }
 
             return userToken !== null && userToken !== "";
@@ -57,8 +67,7 @@
                 .then(function (response) {
                     if (angular.isDefined(response.data.token) && response.data.user.confirmed) {
                         // Success response
-                        userToken = response.data.token;
-                        $window.sessionStorage.setItem("matches_token", userToken);
+                        us.setUserToken(response.data.token);
                         deferred.resolve(response.data);
                     } else {
                         if (angular.isDefined(response.data.user))
@@ -78,7 +87,7 @@
          * @description Logs out the user. It is sufficient to only remove the local copies of the session.
          */
         us.logout = function(){
-            userToken = "";
+            us.setUserToken("");
             user = {};
             $window.sessionStorage.removeItem("matches_token");
         }
