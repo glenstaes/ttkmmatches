@@ -25,9 +25,9 @@
          */
         es.getLocalErrorMessage = function (code, defaultMessage) {
             if (angular.isUndefined(code))
-                return;
+                return defaultMessage;
 
-            return (ERRORMESSAGES[code] || defaultMessages) || code;
+            return (ERRORMESSAGES[code] || defaultMessage) || code;
         };
 
         // Return the service functionality
