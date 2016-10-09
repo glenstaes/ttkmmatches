@@ -19,7 +19,7 @@
          * @returns {String} The full url of the endpoint
          */
         api.getEndpoint = function(endpoint){
-            return [apiUrl, api.ENDPOINTS[endpoint]].join("");
+            return [apiUrl, api.ENDPOINTS[endpoint] || ""].join("");
         };
 
         // Return the service functionality
