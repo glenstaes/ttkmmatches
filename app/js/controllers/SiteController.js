@@ -63,7 +63,7 @@
          * @function ctrl.logout
          * @description Tries to logout the user
          */
-        ctrl.logout = function(){
+        ctrl.logout = function () {
             UserService.logout();
             UserService.redirectIfNotLoggedIn();
         }
