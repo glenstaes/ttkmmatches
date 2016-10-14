@@ -28,6 +28,7 @@
     "angular-material": "^1.1.1",
     "angular-mocks": "^1.5.8",
     "angular-route": "^1.5.8",
+    "browser-sync": "^2.17.3",
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "jasmine-core": "^2.5.2",
