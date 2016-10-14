@@ -11,12 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('statics/login');
-});
-Route::get('/register', function () {
-    return view('statics/register');
-});
-
 Route::post("/signup", "AuthController@createUser");
 Route::post("/signin", "AuthController@loginUser");
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    // Users need to be logged in before they can use these routes
+    Route::post("/tabt/members", "Tabt@getMembers");
+});
