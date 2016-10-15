@@ -63,13 +63,12 @@
             </md-toolbar>
             <md-content layout-margin>
                 <md-list flex>
-                    <md-list-item class="md-1-line" ng-repeat="navItem in Site.UserService.isLoggedIn() ? Site.generalNavItems : []" ng-click="Site.navigateTo(navItem)">
-                        <i class="fa {{ navItem.icon }}"></i> <span class="nav-item-label">{{ navItem.label }}</span>
-                    </md-list-item>
-                    <md-divider></md-divider>
-                    <md-list-item class="md-1-line" ng-click="Site.logout()">
-                        <i class="fa fa-sign-out"></i> <span class="nav-item-label">Uitloggen</span>
-                    </md-list-item>
+                    <div ng-repeat="navGroup in Site.UserService.isLoggedIn() ? Site.generalNavItems : []">
+                        <md-divider ng-if="$index > 0"></md-divider>
+                        <md-list-item class="md-1-line" ng-repeat="navItem in navGroup" ng-click="Site.navigateTo(navItem)">
+                            <i class="fa {{ navItem.icon }}"></i> <span class="nav-item-label">{{ navItem.label }}</span>
+                        </md-list-item>
+                    </div>
                 </md-list>
 
                 <md-button ng-if="!Site.isGtMd()" class="md-raised md-accent" ng-click="Site.toggleMenu()">Sluit menu</md-button>

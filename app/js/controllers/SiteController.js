@@ -9,19 +9,32 @@
         ctrl.isSpeedDialOpen = false;
 
         // Holds the general menu items
-        ctrl.generalNavItems = [{
-            icon: "fa-home",
-            link: "/",
-            label: "Dashboard"
-        }, {
+        ctrl.generalNavItems = [
+            // First group: General
+            [{
+                icon: "fa-home",
+                link: "/",
+                label: "Dashboard"
+            }],
+            // Second group: Members
+            [{
                 icon: "fa-users",
                 link: "/sterktelijst/sporta",
                 label: "Sterktelijst Sporta"
             }, {
-                icon: "fa-users",
-                link: "/sterktelijst/vttl",
-                label: "Sterktelijst VTTL"
-            }];
+                    icon: "fa-users",
+                    link: "/sterktelijst/vttl",
+                    label: "Sterktelijst VTTL"
+                }],
+            // Third group: Logout
+            [{
+                icon: "fa-sign-out",
+                click: function () {
+                    ctrl.logout();
+                },
+                label: "Uitloggen"
+            }]
+        ];
 
         /**
          * @function ctrl.isGtMd
@@ -56,7 +69,15 @@
          */
         ctrl.navigateTo = function (menuItem) {
             if (angular.isDefined(menuItem) && menuItem !== null) {
-                $location.path(menuItem.link);
+                // Determine link or action
+                if (angular.isDefined(menuItem.link)) {
+                    // Navigate to the route
+                    $location.path(menuItem.link);
+                } else if (angular.isFunction(menuItem.click)) {
+                    // Execute the click function
+                    menuItem.click();
+                }
+
                 // Close the sidenav if it is open on mobile
                 if (!ctrl.isGtMd())
                     ctrl.toggleMenu();
