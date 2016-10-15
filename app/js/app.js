@@ -1,6 +1,6 @@
 (function(){
     // Instantiate the module
-    angular.module("matches", ["ngRoute", "ngMaterial"]);
+    angular.module("matches", ["ngRoute", "ngMaterial", "smart-table"]);
 
     // Set the module configuration
     angular.module("matches")
@@ -20,6 +20,30 @@
                 controller: "LoginController",
                 controllerAs: "LoginCtrl",
                 templateUrl: "app/js/pages/login.html"
+            }).when("/sterktelijst/vttl", {
+                controller: "MembersController",
+                controllerAs: "MembersCtrl",
+                templateUrl: "app/js/pages/members.html",
+                resolve: {
+                    _members: ["MembersService", function(MembersService){
+                        return MembersService.getMembers();
+                    }],
+                    _federation: function(){
+                        return "VTTL";
+                    }
+                }
+            }).when("/sterktelijst/sporta", {
+                controller: "MembersController",
+                controllerAs: "MembersCtrl",
+                templateUrl: "app/js/pages/members.html",
+                resolve: {
+                    _members: ["MembersService", function(MembersService){
+                        return MembersService.getMembers();
+                    }],
+                    _federation: function(){
+                        return "Sporta"
+                    }
+                }
             }).otherwise("/");
 
         });

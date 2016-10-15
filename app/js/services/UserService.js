@@ -13,10 +13,21 @@
          * @description Sets the user token variable of the service with a user token.
          * @param {String} value - The value to set as the user token.
          */
-        us.setUserToken = function(value){
+        us.setUserToken = function (value) {
             userToken = value;
             $window.sessionStorage.setItem("matches_token", userToken);
         };
+
+        /**
+         * @function getUserToken
+         * @description Gets the user token
+         * @returns {String} The user token or undefined
+         */
+        us.getUserToken = function () {
+            if (userToken && userToken !== "")
+                return userToken;
+            return undefined;
+        }
 
         /**
          * @function isLoggedIn
@@ -24,11 +35,11 @@
          * it assumes that the user is logged in.
          */
         us.isLoggedIn = function () {
-            if(userToken !== null && userToken !== "")
+            if (userToken !== null && userToken !== "")
                 return true;
-            
+
             // Check the session storage for a token
-            if($window.sessionStorage.getItem("matches_token")){
+            if ($window.sessionStorage.getItem("matches_token")) {
                 us.setUserToken($window.sessionStorage.getItem("matches_token"));
             }
 
@@ -48,8 +59,8 @@
          * @function redirectIfLoggedIn
          * @description Redirects the user to the dashboard if he is logged in.
          */
-        us.redirectIfLoggedIn = function(){
-            if(us.isLoggedIn())
+        us.redirectIfLoggedIn = function () {
+            if (us.isLoggedIn())
                 $location.path("/dashboard");
         }
 
@@ -86,7 +97,7 @@
          * @function logout
          * @description Logs out the user. It is sufficient to only remove the local copies of the session.
          */
-        us.logout = function(){
+        us.logout = function () {
             us.setUserToken("");
             user = {};
             $window.sessionStorage.removeItem("matches_token");

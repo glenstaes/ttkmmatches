@@ -9,7 +9,8 @@
 
         // Define the endpoints
         api.ENDPOINTS = {
-            login: "signin"
+            login: "signin",
+            members: "tabt/members"
         };
 
         /**

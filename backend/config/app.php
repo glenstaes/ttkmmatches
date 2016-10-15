@@ -153,7 +153,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+         Barryvdh\Cors\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -166,7 +166,7 @@ return [
         /*
          * JWT Providers
          */
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
     ],
 
     /*
@@ -216,7 +216,7 @@ return [
         /*
          * JWT
          */
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 

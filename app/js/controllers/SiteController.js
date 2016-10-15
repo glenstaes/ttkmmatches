@@ -14,13 +14,13 @@
             link: "/",
             label: "Dashboard"
         }, {
-                icon: "fa-list",
-                link: "/",
-                label: "Mijn opstellingen"
+                icon: "fa-users",
+                link: "/sterktelijst/sporta",
+                label: "Sterktelijst Sporta"
             }, {
-                icon: "fa-calendar-check-o",
-                link: "/",
-                label: "Mijn beschikbaarheden"
+                icon: "fa-users",
+                link: "/sterktelijst/vttl",
+                label: "Sterktelijst VTTL"
             }];
 
         /**
@@ -55,8 +55,12 @@
          * @param {Object} menuItem - The menu item that the user needs to navigate to
          */
         ctrl.navigateTo = function (menuItem) {
-            if (angular.isDefined(menuItem) && menuItem !== null)
+            if (angular.isDefined(menuItem) && menuItem !== null) {
                 $location.path(menuItem.link);
+                // Close the sidenav if it is open on mobile
+                if (!ctrl.isGtMd())
+                    ctrl.toggleMenu();
+            }
         };
 
         /**

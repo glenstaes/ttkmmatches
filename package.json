@@ -28,6 +28,8 @@
     "angular-material": "^1.1.1",
     "angular-mocks": "^1.5.8",
     "angular-route": "^1.5.8",
+    "angular-smart-table": "^2.1.8",
+    "bootstrap": "^3.3.7",
     "browser-sync": "^2.17.3",
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
