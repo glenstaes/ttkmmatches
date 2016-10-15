@@ -1,12 +1,10 @@
 (function () {
-    var SiteController = function ($mdMedia, $mdSidenav, $location, UserService) {
+    var SiteController = function ($mdMedia, $mdSidenav, $location, $rootScope, UserService) {
         var ctrl = this;
 
         // Bind services to controller so they can be used in the template
         ctrl.UserService = UserService;
-
-        // Boolean to check whether the top right speed dial fab is opened.
-        ctrl.isSpeedDialOpen = false;
+        ctrl.nextRoute = { };
 
         // Holds the general menu items
         ctrl.generalNavItems = [
@@ -92,7 +90,15 @@
             UserService.logout();
             UserService.redirectIfNotLoggedIn();
         }
+
+        // Listen to the state change events to show the indicator
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+            ctrl.nextRoute = next.$$route;
+        });
+        $rootScope.$on("$routeChangeSuccess", function(event, current, previous){
+            ctrl.nextRoute = {};
+        });
     };
 
-    angular.module("matches").controller("SiteController", ["$mdMedia", "$mdSidenav", "$location", "UserService", SiteController]);
+    angular.module("matches").controller("SiteController", ["$mdMedia", "$mdSidenav", "$location", "$rootScope", "UserService", SiteController]);
 })();
