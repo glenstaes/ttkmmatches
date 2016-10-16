@@ -4,28 +4,7 @@
             <h1>Sterktelijst {{ MembersCtrl.federation }}</h1>
         </header>
         <section layout="row" flex>
-            <table st-table="MembersCtrl.members[MembersCtrl.federation].MemberEntries" class="table">
-                <thead>
-                    <tr>
-                        <th>Positie</th>
-                        <th>Index</th>
-                        <th>Lidnummer</th>
-                        <th>Voornaam</th>
-                        <th>Familienaam</th>
-                        <th>Klassement</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="row in MembersCtrl.members[MembersCtrl.federation].MemberEntries">
-                        <td>{{ row.Position }}</td>
-                        <td>{{ row.RankingIndex }}</td>
-                        <td>{{ row.UniqueIndex }}</td>
-                        <td>{{ row.FirstName }}</td>
-                        <td>{{ row.LastName }}</td>
-                        <td>{{ row.Ranking }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <members-list data-members="MembersCtrl.members[MembersCtrl.federation].MemberEntries"></members-list>
         </section>
     </div>
 </md-content>

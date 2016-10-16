@@ -1,0 +1,22 @@
+<table st-table="$ctrl.members" class="table">
+	<thead>
+		<tr>
+			<th>Positie</th>
+			<th>Index</th>
+			<th>Lidnummer</th>
+			<th>Voornaam</th>
+			<th>Familienaam</th>
+			<th>Klassement</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="row in $ctrl.members">
+			<td>{{ row.Position }}</td>
+			<td>{{ row.RankingIndex }}</td>
+			<td>{{ row.UniqueIndex }}</td>
+			<td>{{ row.FirstName }}</td>
+			<td>{{ row.LastName }}</td>
+			<td>{{ row.Ranking }}</td>
+		</tr>
+	</tbody>
+</table>
