@@ -12,5 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(ErrorsSeeder::class);
+        $this->call(FederationSeeder::class);
+        $this->call(RelationTypeSeeder::class);
     }
 }
