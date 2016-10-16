@@ -44,4 +44,18 @@ class Tabt extends Controller
             return Response::json($ex->getMessage());
         }
     }
+
+    public function getSeasons(Request $request){
+        try{
+            $connection = $this->connectToTabT();
+
+            $response = app("stdClass");
+            $response->VTTL = $connection->VTTL->GetSeasons();
+            $response->Sporta = $connection->Sporta->GetSeasons();
+
+            return Response::json($response);
+        } catch(\Exception $ex){
+            return Response::json($ex->getMessage());
+        }
+    }
 }

@@ -16,5 +16,15 @@ Route::post("/signin", "AuthController@loginUser");
 
 Route::group(['middleware' => 'jwt.auth'], function () {
     // Users need to be logged in before they can use these routes
+
+    /**
+     * TABT Api Routes
+     */
     Route::post("/tabt/members", "Tabt@getMembers");
+    Route::post("/tabt/seasons", "Tabt@getSeasons");
+
+    /**
+     * Season routes
+     */
+    Route::post("/seasons", "SeasonController@getSeasons");
 });
