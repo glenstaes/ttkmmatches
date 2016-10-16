@@ -23,5 +23,8 @@ gulp.task("serve", function(){
         proxy: "ttkmmatches"
     });
 
-    gulp.watch(["app/*.*", "app/**/*.*"]).on("change", browserSync.reload);
+    gulp.watch(["app/*.*", "app/**/*.*", "tests/*.*", "tests/**/*.*"]).on("change", function(){
+        browserSync.reload();
+        gulp.start("testsingle");
+    });
 });
