@@ -16,8 +16,8 @@ describe("MembersService", function () {
     describe(".getMembers", function () {
         it("should retrieve the TabT members from the API", function (done) {
             // Mock the backend call
-            $httpBackend.when("POST", ApiService.getEndpoint("members")).respond(tabtMembersList);
-            $httpBackend.expectPOST(ApiService.getEndpoint("members"));
+            $httpBackend.when("POST", ApiService.getEndpoint("tabtmembers")).respond(tabtMembersList);
+            $httpBackend.expectPOST(ApiService.getEndpoint("tabtmembers"));
 
             // Check if it was resolved
             var resolved = false;

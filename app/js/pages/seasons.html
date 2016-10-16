@@ -1,0 +1,31 @@
+<md-content layout="row" layout-padding flex>
+	<div layout="column" flex>
+		<header layout="row">
+			<h1>Seizoenen</h1>
+		</header>
+		<section layout="row">
+			<div layout="column" layout-padding flex="40">
+				<table ng-if="SeasonsCtrl.seasons.length" st-table="SeasonsCtrl.seasons" class="table">
+					<thead>
+						<tr>
+							<th>Naam</th>
+							<th>Huidig?</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in SeasonsCtrl.seasons">
+							<td>{{ row.name }}</td>
+							<td>{{ row.current }}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="alert alert-danger" role="alert">
+					Er zijn geen seizoenen gevonden.
+				</div>
+				<md-button class="md-raised md-primary" ng-click="SeasonsCtrl.tabTSeasons ? SeasonsCtrl.showNewSeasonScreen() : SeasonsCtrl.prepareForNewSeason()">
+					Nieuw seizoen starten
+				</md-button>
+			</div>
+		</section>
+	</div>
+</md-content>

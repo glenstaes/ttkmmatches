@@ -44,6 +44,15 @@
                         return "Sporta"
                     }
                 }
+            }).when("/seizoenen", {
+                controller: "SeasonsController",
+                controllerAs: "SeasonsCtrl",
+                templateUrl: "app/js/pages/seasons.html",
+                resolve: {
+                    _seasons: ["SeasonsService", function(SeasonsService){
+                        return SeasonsService.getSeasons();
+                    }]
+                }
             }).otherwise("/");
 
         });

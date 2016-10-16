@@ -1,6 +1,6 @@
 (function () {
 
-    var LoginController = function ($mdToast, UserService, ErrorService) {
+    var LoginController = function ($mdToast, UserService, ErrorService, UtilityService) {
         var ctrl = this;
 
         // Redirect to the home page if the user is logged in already
@@ -16,29 +16,20 @@
         ctrl.login = function () {
             if (angular.isUndefined(ctrl.user)) {
                 // Create a toast that warns the user.
-                var toast = $mdToast.simple().content(["Fout: Geen logingegevens opgegeven"].join("")).theme("error-toast").position("top right");
-
-                // Show the toast
-                $mdToast.show(toast);
+                UtilityService.showErrorToast("Fout: Geen logingegevens opgegeven");
             } else {
                 ctrl.querying = true;
                 UserService.login(ctrl.user.loginName, ctrl.user.password).then(function (response) {
                     if (UserService.isLoggedIn()) {
                         // Create a toast that welcomes the user.
-                        var toast = $mdToast.simple().content(["Welkom ", response.user.firstName, " ", response.user.lastName, "!"].join("")).theme("success-toast").position("top right");
-
-                        // Show the toast
-                        $mdToast.show(toast);
+                        UtilityService.showSuccessToast(["Welkom ", response.user.firstName, " ", response.user.lastName, "!"].join(""));
 
                         UserService.redirectIfLoggedIn();
                     }
                 }).catch(function (response) {
                     if ((angular.isDefined(response.data) && angular.isDefined(response.data.error)) || angular.isDefined(response.error)) {
                         // Create a toast that warns the user.
-                        var toast = $mdToast.simple().content(["Fout: ", ErrorService.getLocalErrorMessage(response.data ? response.data.error.code : response.error.code)].join("")).theme("error-toast").position("top right");
-
-                        // Show the toast
-                        $mdToast.show(toast);
+                        UtilityService.showErrorToast(["Fout: ", ErrorService.getLocalErrorMessage(response.data ? response.data.error.code : response.error.code)].join(""));
                     }
                 }).finally(function(){
                     ctrl.querying = false;   
@@ -59,5 +50,5 @@
         };
     };
 
-    angular.module("matches").controller("LoginController", ["$mdToast", "UserService", "ErrorService", LoginController]);
+    angular.module("matches").controller("LoginController", ["$mdToast", "UserService", "ErrorService", "UtilityService", LoginController]);
 })();

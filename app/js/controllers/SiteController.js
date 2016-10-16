@@ -4,7 +4,7 @@
 
         // Bind services to controller so they can be used in the template
         ctrl.UserService = UserService;
-        ctrl.nextRoute = { };
+        ctrl.nextRoute = {};
 
         // Holds the general menu items
         ctrl.generalNavItems = [
@@ -20,11 +20,17 @@
                 link: "/sterktelijst/sporta",
                 label: "Sterktelijst Sporta"
             }, {
-                    icon: "fa-users",
-                    link: "/sterktelijst/vttl",
-                    label: "Sterktelijst VTTL"
-                }],
-            // Third group: Logout
+                icon: "fa-users",
+                link: "/sterktelijst/vttl",
+                label: "Sterktelijst VTTL"
+            }],
+            // Third group: Administration
+            [{
+                icon: "fa-trophy",
+                link: "/seizoenen",
+                label: "Seizoenen"
+            }],
+            // Fourth group: Logout
             [{
                 icon: "fa-sign-out",
                 click: function () {
@@ -95,7 +101,7 @@
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
             ctrl.nextRoute = next.$$route;
         });
-        $rootScope.$on("$routeChangeSuccess", function(event, current, previous){
+        $rootScope.$on("$routeChangeSuccess", function (event, current, previous) {
             ctrl.nextRoute = {};
         });
     };

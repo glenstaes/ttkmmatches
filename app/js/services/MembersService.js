@@ -12,7 +12,7 @@
         m.getMembers = function () {
             var deferred = $q.defer();
 
-            $http.post(Api.getEndpoint("members"), undefined, {
+            $http.post(Api.getEndpoint("tabtmembers"), undefined, {
                 headers: {
                     "Authorization": "Bearer " + UserService.getUserToken()
                 }
