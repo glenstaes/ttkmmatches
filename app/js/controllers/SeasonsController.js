@@ -76,9 +76,19 @@
 
                         //Save the form
                         $scope.save = function () {
-                            SeasonsService.newSeason($scope.newSeason.season, $scope.newSeason.name).then(function () {
-                                $scope.hide();
-                                ctrl.refreshSeasons();
+                            SeasonsService.newSeason($scope.newSeason.season, $scope.newSeason.name).then(function (response) {
+                                if (angular.isString(response)) {
+                                    // Show the error
+                                    UtilityService.showErrorToast(response);
+                                } else {
+                                    $scope.hide();
+                                    ctrl.refreshSeasons();
+
+                                    if (angular.isObject(response)) {
+                                        // Show success notification
+                                        UtilityService.showSuccessToast("Seizoen " + response.customName + " aangemaakt. Spelers: " + response.importedPlayers + ".");
+                                    }
+                                }
                             }).catch(function (error) {
                                 UtilityService.showErrorToast(error);
                             });
