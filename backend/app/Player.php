@@ -66,4 +66,25 @@ class Player extends Model
             }
         }
     }
+
+    /**
+     * Gets the members for the given season.
+     *
+     * @param (object[]) An array of member entries
+     * @param (Federation) The federation to import into
+     * @param (Season) The season to import into
+     * @return (Object) An object containing the VTTL and Sporta members
+     */
+    public static function getBySeason($season){
+        $members = app("stdClass");
+        $members->VTTL = Player::where([
+            ["seasonId", "=", $season['id']],
+            ["federationId", "=", 1]
+        ])->get();
+        $members->Sporta = Player::where([
+            ["seasonId", "=", $season['id']],
+            ["federationId", "=", 2]
+        ])->get();
+        return $members;
+    }
 }

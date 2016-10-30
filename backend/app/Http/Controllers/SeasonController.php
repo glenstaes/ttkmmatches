@@ -52,6 +52,34 @@ class SeasonController extends Controller
         return Response::json(Season::all());
     }
 
+    /**
+     * getSeason
+     *
+     * Gets a seasons from the database.
+     *
+     * @param (Request) An instance of the Request object. 
+     * @return (Array<Season>) An array of Season objects.
+     */
+     public function getSeason(Request $request){
+         $id = Input::only("id");
+
+         $season = Season::find($id);
+
+         if(!is_null($season)){
+             $season[0]['members'] = Player::getBySeason($season[0]);
+         }
+
+         return Response::json($season);
+     }
+
+    /**
+     * newSeason
+     *
+     * Creates a new season.
+     *
+     * @param (Request) An instance of the Request object. 
+     * @return (Season) The created season.
+     */
     public function newSeason(Request $request){
         try{
             $connection = $this->connectToTabT();
@@ -84,6 +112,5 @@ class SeasonController extends Controller
         } catch(\Exception $ex){
             return Response::json($ex->getMessage());
         }
-        
     }
 }
