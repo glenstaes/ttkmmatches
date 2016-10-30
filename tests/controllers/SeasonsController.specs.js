@@ -69,6 +69,27 @@ describe("SeasonsController", function () {
         });
     });
 
+    describe("refreshSeasons", function(){
+        beforeEach(function(){
+            spyOn(SeasonsService, "getSeasons").and.returnValue(deferred.promise);
+            spyOn(SeasonsController, "setSeasons");
+        })
+
+        it("should refresh the seasons in the controller", function(){
+            SeasonsController.refreshSeasons();
+
+            expect(SeasonsService.getSeasons).toHaveBeenCalled();
+            expect(SeasonsController.loading).toBeTruthy();
+
+            deferred.resolve({ name: "2015-2016", customName: "2016", isCurrent: false });
+
+            $rootScope.$apply();
+            
+            expect(SeasonsController.setSeasons).toHaveBeenCalled();
+            expect(SeasonsController.loading).toBeFalsy();
+        });
+    });
+
     describe("showNewSeasonScreen", function () {
         beforeEach(function () {
             spyOn($mdDialog, "show");
@@ -89,6 +110,24 @@ describe("SeasonsController", function () {
 
             expect($mdDialog.show).not.toHaveBeenCalled();
             expect(SeasonsController.prepareForNewSeason).toHaveBeenCalled();
+        });
+    });
+
+    describe("setSeasons", function(){
+        it("should do nothing if no valid parameter is passed", function(){
+            spyOn(angular, "forEach");
+
+            SeasonsController.setSeasons();
+            expect(angular.forEach).not.toHaveBeenCalled();
+
+            SeasonsController.setSeasons(null);
+            expect(angular.forEach).not.toHaveBeenCalled();
+
+            SeasonsController.setSeasons("blablabla");
+            expect(angular.forEach).not.toHaveBeenCalled();
+
+            SeasonsController.setSeasons([{ name: "2016-2017", customName: "2017"}]);
+            expect(angular.forEach).toHaveBeenCalled();
         });
     });
 });

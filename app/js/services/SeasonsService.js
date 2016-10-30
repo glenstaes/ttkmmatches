@@ -33,10 +33,12 @@
         /**
          * @function newSeason
          * @description Contacts the API to create a new season
+         * @param {String} season - The name of the season in the TabT database
+         * @param {String} name - The custom name to use
          * @returns {Promise} A promise that will be resolved with the data of the new season or rejected with an error
          */
         s.newSeason = function(season, name){
-            return Api.quickCall("seasons-new", undefined, {
+            return Api.quickCall("seasons-new", {name: season, customName: name}, {
                 headers: {
                     "Authorization": "Bearer " + UserService.getUserToken()
                 }

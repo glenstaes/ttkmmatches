@@ -1,30 +1,58 @@
 <md-content layout="row" layout-padding flex>
 	<div layout="column" flex>
-		<header layout="row">
+		<header layout="row" layout-align="space-between center">
 			<h1>Seizoenen</h1>
+			<md-progress-circular ng-if="SeasonsCtrl.loading" md-mode="indeterminate"></md-progress-circular>
+			<md-fab-speed-dial ng-if="!SeasonsCtrl.loading" md-open="SeasonsCtrl.seasonMenuOpen" class="md-scale" md-direction="left">
+				<md-fab-trigger>
+					<md-button aria-label="menu" class="md-fab md-warn">
+						<md-icon md-font-icon="fa fa-2x fa-cogs"></md-icon>
+						<md-tooltip md-direction="top">Acties</md-tooltip>
+					</md-button>
+				</md-fab-trigger>
+
+				<md-fab-actions>
+					<md-button ng-click="SeasonsCtrl.tabTSeasons ? SeasonsCtrl.showNewSeasonScreen() : SeasonsCtrl.prepareForNewSeason()" aria-label="new"
+						class="md-fab md-raised md-mini">
+						<md-icon md-font-icon="fa fa-plus"></md-icon>
+						<md-tooltip md-direction="top">Nieuw seizoen</md-tooltip>
+					</md-button>
+					<md-button ng-click="SeasonsCtrl.refreshSeasons()" aria-label="new" class="md-fab md-raised md-mini">
+						<md-icon md-font-icon="fa fa-refresh"></md-icon>
+						<md-tooltip md-direction="top">Overzicht vernieuwen</md-tooltip>
+					</md-button>
+				</md-fab-actions>
+			</md-fab-speed-dial>
 		</header>
 		<section layout="row">
 			<div layout="column" layout-padding flex="40">
 				<table ng-if="SeasonsCtrl.seasons.length" st-table="SeasonsCtrl.seasons" class="table">
 					<thead>
 						<tr>
-							<th>Naam</th>
 							<th>Huidig?</th>
+							<th>Naam</th>
+							<th>Acties</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="row in SeasonsCtrl.seasons">
-							<td>{{ row.name }}</td>
-							<td>{{ row.current }}</td>
+							<td><i class="fa" ng-class="{'fa-check': row.current, 'fa-times': !row.current}"></i> </td>
+							<td>{{ row.displayName }}</td>
+							<td>
+								<span>
+									<i class="fa fa-hand-pointer-o" ng-if="!row.current"></i>
+								</span>
+
+								<span>
+									<i class="fa fa-pencil"></i>
+								</span>
+							</td>
 						</tr>
 					</tbody>
 				</table>
-				<div class="alert alert-danger" role="alert">
+				<div ng-if="!SeasonsCtrl.seasons.length" class="alert alert-danger" role="alert">
 					Er zijn geen seizoenen gevonden.
 				</div>
-				<md-button class="md-raised md-primary" ng-click="SeasonsCtrl.tabTSeasons ? SeasonsCtrl.showNewSeasonScreen() : SeasonsCtrl.prepareForNewSeason()">
-					Nieuw seizoen starten
-				</md-button>
 			</div>
 		</section>
 	</div>

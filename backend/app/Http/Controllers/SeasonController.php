@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Response as Response;
+use Illuminate\Support\Facades\Input as Input;
 
 use App\Season;
 
@@ -21,5 +22,16 @@ class SeasonController extends Controller
      */
     public function getSeasons(Request $request){
         return Response::json(Season::all());
+    }
+
+    public function newSeason(Request $request){
+        $input = Input::only("name", "customName");
+
+        $newSeason = Season::create(['name' => $input["name"]]);
+
+        $newSeason->customName = $input["customName"];
+        $newSeason->save();
+
+        return Response::json($newSeason);
     }
 }

@@ -27,4 +27,5 @@ Route::group(['middleware' => 'jwt.auth'], function () {
      * Season routes
      */
     Route::post("/seasons", "SeasonController@getSeasons");
+    Route::post("/seasons/new", "SeasonController@newSeason");
 });
