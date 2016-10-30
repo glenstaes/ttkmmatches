@@ -24,4 +24,13 @@ class Season extends Model
 
     // The table
     protected $table = "season";
+
+    public static function getCurrent(){
+        $current = Season::where("current", "=", "1")->get();
+
+        if($current->isEmpty())
+            return null;
+        else
+            return $current[0];
+    }
 }

@@ -31,26 +31,12 @@
 						<tr>
 							<th>Huidig?</th>
 							<th>Naam</th>
-							<th>Acties</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="row in SeasonsCtrl.seasons">
+						<tr ng-repeat="row in SeasonsCtrl.seasons" ng-click="SeasonsCtrl.selected = row" class="clickable">
 							<td><i class="fa" ng-class="{'fa-check': row.current, 'fa-times': !row.current}"></i> </td>
 							<td>{{ row.displayName }}</td>
-							<td>
-								<span ng-click="SeasonsCtrl.selected = row">
-									<i class="fa fa-eye clickable"></i>
-									<md-tooltip md-direction="top">Toon details</md-tooltip>
-								</span>
-								<span>
-									<i class="fa fa-hand-pointer-o clickable" ng-if="!row.current"></i>
-								</span>
-
-								<span>
-									<i class="fa fa-pencil clickable"></i>
-								</span>
-							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -79,15 +65,17 @@
 						</div>
 					</md-card-content>
 					<md-card-actions layout="row" layout-align="start center">
-						<md-button ng-if="!SeasonsCtrl.selected.current">
+						<md-button ng-click="SeasonsCtrl.setAsCurrent(SeasonsCtrl.selected)" ng-if="!SeasonsCtrl.selected.current">
 							<i class="fa fa-hand-pointer-o"></i> Maak huidig
+							<md-tooltip md-direction="top">
+								Gebruik dit seizoen voor opstellingenbeheer
+							</md-tooltip>
 						</md-button>
 						<md-button>
 							<i class="fa fa-pencil"></i> Wijzig naam
 						</md-button>
 						<md-button>
-							<i class="fa fa-refresh"></i>
-							Synchroniseer
+							<i class="fa fa-refresh"></i> Synchroniseer
 						</md-button>
 					</md-card-actions>
 				</md-card>

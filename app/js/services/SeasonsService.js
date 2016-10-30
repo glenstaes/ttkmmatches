@@ -59,6 +59,20 @@
             });
         };
 
+        /**
+         * @function setAsCurrent
+         * @description Sets the given season as the current season
+         * @param {String} seasonId - The id of the season
+         * @returns {Promise} A promise that will be resolved with the data of the season or rejected with an error
+         */
+        s.setAsCurrent = function(seasonId){
+            return Api.quickCall("seasons-current", {id: seasonId}, {
+                headers: {
+                    "Authorization": "Bearer " + UserService.getUserToken()
+                }
+            });
+        };
+
         return s;
     };
 

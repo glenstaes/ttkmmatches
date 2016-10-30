@@ -90,6 +90,24 @@ describe("SeasonsController", function () {
         });
     });
 
+    describe("setAsCurrent", function(){
+        beforeEach(function(){
+            spyOn(SeasonsService, "setAsCurrent").and.returnValue(deferred.promise);
+            spyOn(SeasonsController, "refreshSeasons");
+        })
+
+        it("should set the provided season as the current", function(){
+            SeasonsController.setAsCurrent(seasonsList[0]);
+            expect(SeasonsController.loading).toBeTruthy();
+
+            deferred.resolve({ name: "2015-2016", customName: "2016", isCurrent: true });
+
+            $rootScope.$apply();
+            
+            expect(SeasonsController.refreshSeasons).toHaveBeenCalled();
+        });
+    });
+
     describe("showNewSeasonScreen", function () {
         beforeEach(function () {
             spyOn($mdDialog, "show");

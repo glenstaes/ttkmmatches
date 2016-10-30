@@ -13,6 +13,7 @@ describe("SeasonsService", function () {
         $httpBackend.when("POST", ApiService.getEndpoint("tabtseasons")).respond(tabtSeasonsList);
         $httpBackend.when("POST", ApiService.getEndpoint("seasons")).respond(seasonsList);
         $httpBackend.when("POST", ApiService.getEndpoint("seasons-single")).respond(seasonsList[0]);
+        $httpBackend.when("POST", ApiService.getEndpoint("seasons-current")).respond(seasonsList);
     }));
 
     describe(".getTabTSeasons", function () {
@@ -53,8 +54,8 @@ describe("SeasonsService", function () {
         it("should retrieve a season from the API", function(done){
             $httpBackend.expectPOST(ApiService.getEndpoint("seasons-single"));
 
-            SeasonsService.getSeasons().then(function (response) {
-                expect(response.length).toBe(1);
+            SeasonsService.getSeason().then(function (response) {
+                expect(response.id).toBe(1);
             }).finally(function () {
                 done();
 
@@ -65,4 +66,21 @@ describe("SeasonsService", function () {
             $httpBackend.flush();
         });
     });
+
+    describe(".setAsCurrent", function(){
+        it("should set the provided season as the current", function(){
+            $httpBackend.expectPOST(ApiService.getEndpoint("seasons-current"));
+
+            SeasonsService.setAsCurrent(1).then(function (response) {
+                expect(response.length).toBe(1);
+            }).finally(function () {
+                done();
+
+                $httpBackend.verifyNoOutstandingExpectation();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+
+            $httpBackend.flush();
+        });
+    })
 });

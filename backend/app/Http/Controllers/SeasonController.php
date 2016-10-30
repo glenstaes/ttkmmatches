@@ -67,7 +67,7 @@ class SeasonController extends Controller
      * @return (Array<Season>) An array of Season objects.
      */
      public function getSeason(Request $request){
-         $id = Input::only("id");
+         $id = Input::only("id")["id"];
 
          $season = Season::find($id);
 
@@ -119,4 +119,30 @@ class SeasonController extends Controller
             return Response::json($ex->getMessage());
         }
     }
+
+    /**
+     * setAsCurrent
+     *
+     * Sets the provided season as the current season.
+     *
+     * @param (Request) An instance of the Request object. 
+     * @return (Season) The current season.
+     */
+     public function setAsCurrent(Request $request){
+         $id = Input::only("id")["id"];
+
+         $season = Season::find($id);
+
+         if(!is_null($season)){
+             $current = Season::getCurrent();
+             if(!is_null($current)){
+                $current->current = 0;
+                $current->save();
+             }
+             $season->current = 1;
+             $season->save();
+         }
+
+         return Response::json(Season::getCurrent());
+     }
 }

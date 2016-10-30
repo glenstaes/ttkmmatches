@@ -12,7 +12,7 @@ describe("ApiService", function(){
 
     it("should have endpoints defined", function(){
         expect(ApiService.ENDPOINTS).toBeDefined();
-        expect(Object.keys(ApiService.ENDPOINTS).length).toEqual(6);
+        expect(Object.keys(ApiService.ENDPOINTS).length).toEqual(7);
     });
 
     describe(".getEndpoint", function(){

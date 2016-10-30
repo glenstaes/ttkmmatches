@@ -37,9 +37,36 @@
 
             SeasonsService.getSeasons().then(function (response) {
                 ctrl.setSeasons(response);
+
+                if(angular.isDefined(ctrl.selected)){
+                    angular.forEach(ctrl.seasons, function(season){
+                        if(season.id === ctrl.selected.id){
+                            ctrl.selected = season;
+                        }
+                    });
+                }
                 deferred.resolve(response);
             }).finally(function () {
                 ctrl.loading = false;
+            });
+
+            return deferred.promise;
+        };
+
+        /**
+         * @function setAsCurrent
+         * @description Sets the provided season as the current season
+         * @param {Object} season - The season
+         * @returns {Promise} A promise that is resolved when the function has completed
+         */
+        ctrl.setAsCurrent = function(season){
+            var deferred = $q.defer();
+
+            ctrl.loading = true;
+
+            SeasonsService.setAsCurrent(season.id).finally(function () {
+                ctrl.refreshSeasons();
+                deferred.resolve();
             });
 
             return deferred.promise;
