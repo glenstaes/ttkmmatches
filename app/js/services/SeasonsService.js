@@ -31,6 +31,20 @@
         };
 
         /**
+         * @function getSeasons
+         * @description Gets the details of a season
+         * @param {int} id - The id of a season
+         * @returns {Promise} A promise that will be resolved with the season details or rejected with an error
+         */
+        s.getSeason = function(id){
+            return Api.quickCall("seasons-single", { id: id }, {
+                headers: {
+                    "Authorization": "Bearer " + UserService.getUserToken()
+                }
+            });
+        };
+
+        /**
          * @function newSeason
          * @description Contacts the API to create a new season
          * @param {String} season - The name of the season in the TabT database

@@ -19,3 +19,5 @@ md-toast[md-theme=error-toast] .md-toast-content{
     background: linear-gradient(to right,  #cc0000 0%,#cc0000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc0000', endColorstr='#cc0000',GradientType=1 ); /* IE6-9 */
 }
+
+.clickable{ cursor: pointer;}

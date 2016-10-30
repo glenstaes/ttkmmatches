@@ -49,7 +49,13 @@ class SeasonController extends Controller
      * @return (Array<Season>) An array of Season objects.
      */
     public function getSeasons(Request $request){
-        return Response::json(Season::all());
+        $seasons = Season::all();
+
+        foreach($seasons as $season){
+            $season->members = Player::getBySeason($season);
+        }
+        
+        return Response::json($seasons);
     }
 
     /**

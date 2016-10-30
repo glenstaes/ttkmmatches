@@ -12,6 +12,7 @@
             login: "signin",
             seasons: "seasons",
             "seasons-new": "seasons/new",
+            "seasons-single": "seasons/get",
             tabtmembers: "tabt/members",
             tabtseasons: "tabt/seasons"
         };
