@@ -59,6 +59,7 @@
                 <span>TTKM Matches</span>
             </h2>
         </div>
+        <md-progress-linear class="md-accent" ng-if="Site.querying" md-mode="query"></md-progress-linear>
     </md-toolbar>
 
     <div layout="row" flex>
@@ -74,7 +75,6 @@
                         <md-list-item md-layout="row" class="md-1-line" ng-repeat="navItem in navGroup" ng-click="Site.navigateTo(navItem)">
                             <i flex="7" class="fa {{ navItem.icon }}"></i> 
                             <span flex class="nav-item-label">{{ navItem.label }}</span>
-                            <md-progress-circular ng-if="navItem.link && Site.nextRoute.originalPath === navItem.link" flex="7" md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
                         </md-list-item>
                     </div>
                 </md-list>

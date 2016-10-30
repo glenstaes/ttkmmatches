@@ -1,4 +1,4 @@
-<table st-table="$ctrl.members" class="table">
+<table st-table="$ctrl.ngModel.$modelValue" class="table">
 	<thead>
 		<tr>
 			<th>Positie</th>
@@ -10,7 +10,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="row in $ctrl.members">
+		<tr ng-repeat="row in $ctrl.ngModel.$modelValue">
 			<td>{{ row.Position }}</td>
 			<td>{{ row.RankingIndex }}</td>
 			<td>{{ row.UniqueIndex }}</td>

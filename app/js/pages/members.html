@@ -4,7 +4,7 @@
             <h1>Sterktelijst {{ MembersCtrl.federation }}</h1>
         </header>
         <section layout="row" flex>
-            <members-list data-members="MembersCtrl.members[MembersCtrl.federation].MemberEntries"></members-list>
+            <members-list ng-model="MembersCtrl.members[MembersCtrl.federation].MemberEntries"></members-list>
         </section>
     </div>
 </md-content>

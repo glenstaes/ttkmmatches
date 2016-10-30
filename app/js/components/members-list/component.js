@@ -7,8 +7,8 @@
     angular.module("matches").component("membersList", {
         templateUrl: "app/js/components/members-list/template.html",
         controller: [membersListComponent],
-        bindings: {
-            members: "<"
+        require: {
+            ngModel: "ngModel"
         }
     });
     

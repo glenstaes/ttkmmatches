@@ -4,7 +4,7 @@
 
         // Bind services to controller so they can be used in the template
         ctrl.UserService = UserService;
-        ctrl.nextRoute = {};
+        ctrl.querying = false;
 
         // Holds the general menu items
         ctrl.generalNavItems = [
@@ -99,10 +99,10 @@
 
         // Listen to the state change events to show the indicator
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            ctrl.nextRoute = next.$$route;
+            ctrl.querying = true;
         });
         $rootScope.$on("$routeChangeSuccess", function (event, current, previous) {
-            ctrl.nextRoute = {};
+            ctrl.querying = false;
         });
     };
 
