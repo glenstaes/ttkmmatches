@@ -54,7 +54,7 @@ class SeasonController extends Controller
         foreach($seasons as $season){
             $season->members = Player::getBySeason($season);
         }
-        
+
         return Response::json($seasons);
     }
 
@@ -92,27 +92,27 @@ class SeasonController extends Controller
 
             $input = Input::only("name", "customName");
 
+            // Get the teams
+
+            /***** Get the members *****/
+            // VTTL
+            $vttlRequest = array("Club" => "A141", "Season" => intval(substr($input["name"], -2)));
+            $vttlMembers = $connection->VTTL->GetMembers($vttlRequest);
+
+            // Sporta
+            $sportaRequest = array("Club" => "1252", "Season" => intval(substr($input["name"], -2)));
+            $sportaMembers = $connection->Sporta->GetMembers($sportaRequest);
+
+            // Get the matches
+
             // Save the new season
             $newSeason = Season::create(['name' => $input["name"]]);
             $newSeason->customName = $input["customName"];
             $newSeason->save();
 
-            // Get the teams
-
-            /***** Get the members *****/
-            // VTTL
-            $vttlRequest = array("Club" => "A141");
-            $vttlMembers = $connection->VTTL->GetMembers($vttlRequest);
-
-            // Sporta
-            $sportaRequest = array("Club" => "1252");
-            $sportaMembers = $connection->Sporta->GetMembers($sportaRequest);
-
             Player::import($vttlMembers->MemberEntries, Federation::find(1), $newSeason);
             Player::import($sportaMembers->MemberEntries, Federation::find(2), $newSeason);
             $newSeason->importedPlayers = $vttlMembers->MemberCount + $sportaMembers->MemberCount;
-
-            // Get the matches
 
             return Response::json($newSeason);
         } catch(\Exception $ex){
