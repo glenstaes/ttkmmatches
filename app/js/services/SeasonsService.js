@@ -10,23 +10,11 @@
          * @returns {Promise} A promise that will be resolved with the seasons data or rejected with an error
          */
         s.getTabTSeasons = function () {
-            var deferred = $q.defer();
-
-            $http.post(Api.getEndpoint("tabtseasons"), undefined, {
+            return Api.quickCall("tabtseasons", undefined, {
                 headers: {
                     "Authorization": "Bearer " + UserService.getUserToken()
                 }
-            }).then(function (response) {
-                if (angular.isObject(response)) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject(response);
-                }
-            }).catch(function (error) {
-                deferred.reject(error);
             });
-
-            return deferred.promise;
         };
 
         /**
@@ -35,23 +23,24 @@
          * @returns {Promise} A promise that will be resolved with the seasons data or rejected with an error
          */
         s.getSeasons = function () {
-            var deferred = $q.defer();
-
-            $http.post(Api.getEndpoint("seasons"), undefined, {
+            return Api.quickCall("seasons", undefined, {
                 headers: {
                     "Authorization": "Bearer " + UserService.getUserToken()
                 }
-            }).then(function (response) {
-                if (angular.isObject(response)) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject(response);
-                }
-            }).catch(function (error) {
-                deferred.reject(error);
             });
+        };
 
-            return deferred.promise;
+        /**
+         * @function newSeason
+         * @description Contacts the API to create a new season
+         * @returns {Promise} A promise that will be resolved with the data of the new season or rejected with an error
+         */
+        s.newSeason = function(season, name){
+            return Api.quickCall("seasons-new", undefined, {
+                headers: {
+                    "Authorization": "Bearer " + UserService.getUserToken()
+                }
+            });
         };
 
         return s;

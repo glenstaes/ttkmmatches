@@ -1,6 +1,6 @@
 (function(){
 
-    var ApiService = function(){
+    var ApiService = function($q, $http){
         // Declaration
         var apiUrl = "http://backend.ttkmmatches/";
 
@@ -11,6 +11,7 @@
         api.ENDPOINTS = {
             login: "signin",
             seasons: "seasons",
+            "seasons-new": "seasons/new",
             tabtmembers: "tabt/members",
             tabtseasons: "tabt/seasons"
         };
@@ -25,9 +26,32 @@
             return [apiUrl, api.ENDPOINTS[endpoint] || ""].join("");
         };
 
+        /**
+         * @function quickCall
+         * @description Calls the given api endpoint without doing fuzzy stuff with the response or error.
+         * @param {String} endpoint - The name of an endpoint
+         * @param {Object} [data] - The data to send
+         * @returns {Promise} A primise that is rejected when an error occurred or resolved with the response data
+         */
+        api.quickCall = function(endpoint, data, options){
+            var deferred = $q.defer();
+
+            $http.post(api.getEndpoint(endpoint), data, options).then(function(response){
+                if(angular.isObject(response)){
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject(response);
+                }
+            }).catch(function(error){
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        };
+
         // Return the service functionality
         return api;
     };
 
-    angular.module("matches").factory("ApiService", [ApiService]);
+    angular.module("matches").factory("ApiService", ["$q", "$http", ApiService]);
 })();

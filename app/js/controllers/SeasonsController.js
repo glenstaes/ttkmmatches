@@ -50,7 +50,7 @@
                         // Bind to local scope
                         $scope.tabTSeasons = ctrl.tabTSeasons;
 
-                        // Save the form
+                        // //Save the form
                         // $scope.save = function(){
                         //     SeasonsService.newSeason($scope.newSeason).then(function(){
                         //         $scope.hide();
