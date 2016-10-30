@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Federation as Federation;
+
 class Player extends Model
 {
     /**
@@ -25,4 +27,43 @@ class Player extends Model
 
     // The table
     protected $table = "player";
+
+    /**
+     * Imports the given members for the given season.
+     *
+     * @param (object[]) An array of member entries
+     * @param (Federation) The federation to import into
+     * @param (Season) The season to import into
+     */
+    public static function import($members, $federation, $season){
+        foreach($members as $member){
+            $existingPlayer = Player::where([
+                ["uniqueIndex", "=", $member->UniqueIndex],
+                ["federationId", "=", $federation->id],
+                ["seasonId", "=", $season->id]
+            ])->get();
+
+            // Only insert if the player doesn't exist yet
+            if($existingPlayer->isEmpty()){
+                $player = Player::create([
+                    "uniqueIndex" => $member->UniqueIndex,
+                    "position" => $member->Position,
+                    "rankingIndex" => $member->RankingIndex,
+                    "firstName" => $member->FirstName,
+                    "lastName" => $member->LastName,
+                    "ranking" => $member->Ranking,
+                    "federationId" => $federation->id,
+                    "seasonId" => $season->id
+                ]);
+
+                $player->save();
+            } else {
+                // Update existing player
+                $existingPlayer[0]->position = $member->Position;
+                $existingPlayer[0]->rankingIndex = $member->RankingIndex;
+                $existingPlayer[0]->ranking = $member->Ranking;
+                $existingPlayer[0]->save();
+            }
+        }
+    }
 }
