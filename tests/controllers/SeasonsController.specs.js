@@ -131,6 +131,18 @@ describe("SeasonsController", function () {
         });
     });
 
+    describe("updateSeason", function(){
+        beforeEach(function () {
+            spyOn($mdDialog, "show");
+        });
+
+        it("should show the screen to update the season", function(){
+            SeasonsController.updateSeason(seasonsList[0]);
+
+            expect($mdDialog.show).toHaveBeenCalled();
+        });
+    });
+
     describe("setSeasons", function(){
         it("should do nothing if no valid parameter is passed", function(){
             spyOn(angular, "forEach");

@@ -60,6 +60,20 @@
         };
 
         /**
+         * @function updateSeason
+         * @description Contacts the API to update a season
+         * @param {Object} season - The season to update
+         * @returns {Promise} A promise that will be resolved with the data of the updated season or rejected with an error
+         */
+        s.updateSeason = function(season){
+            return Api.quickCall("seasons-update", {id: season.id, customName: season.customName}, {
+                headers: {
+                    "Authorization": "Bearer " + UserService.getUserToken()
+                }
+            });
+        };
+
+        /**
          * @function setAsCurrent
          * @description Sets the given season as the current season
          * @param {String} seasonId - The id of the season

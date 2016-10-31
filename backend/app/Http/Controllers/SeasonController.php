@@ -145,4 +145,27 @@ class SeasonController extends Controller
 
          return Response::json(Season::getCurrent());
      }
+
+    /**
+     * updateName
+     *
+     * Updates the custom name of the provided season.
+     *
+     * @param (Request) An instance of the Request object. 
+     * @return (Season) The updated season.
+     */
+     public function updateName(Request $request){
+         $input = Input::only("id", "customName");
+
+         if(!is_null($input["customName"]) && $input["customName"] != ""){
+             $season = Season::find($input["id"]);
+
+             if(!is_null($season)){
+                $season->customName = $input["customName"];
+                $season->save();
+            }
+         }
+
+         return Response::json(Season::find($input["id"]));
+     }
 }

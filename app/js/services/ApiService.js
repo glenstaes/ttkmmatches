@@ -14,6 +14,7 @@
             "seasons-new": "seasons/new",
             "seasons-single": "seasons/get",
             "seasons-current": "seasons/setcurrent",
+            "seasons-update": "seasons/update",
             tabtmembers: "tabt/members",
             tabtseasons: "tabt/seasons"
         };

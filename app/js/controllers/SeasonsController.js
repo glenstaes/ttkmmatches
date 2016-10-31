@@ -38,9 +38,9 @@
             SeasonsService.getSeasons().then(function (response) {
                 ctrl.setSeasons(response);
 
-                if(angular.isDefined(ctrl.selected)){
-                    angular.forEach(ctrl.seasons, function(season){
-                        if(season.id === ctrl.selected.id){
+                if (angular.isDefined(ctrl.selected)) {
+                    angular.forEach(ctrl.seasons, function (season) {
+                        if (season.id === ctrl.selected.id) {
                             ctrl.selected = season;
                         }
                     });
@@ -59,7 +59,7 @@
          * @param {Object} season - The season
          * @returns {Promise} A promise that is resolved when the function has completed
          */
-        ctrl.setAsCurrent = function(season){
+        ctrl.setAsCurrent = function (season) {
             var deferred = $q.defer();
 
             ctrl.loading = true;
@@ -130,6 +130,54 @@
                 // First get the TabT seasons
                 ctrl.prepareForNewSeason();
             }
+        };
+
+        /**
+         * @function updateSeason
+         * @description Opens the dialog to update a season.
+         * @param {Object} season - The season to update.
+         */
+        ctrl.updateSeason = function (season) {
+            $mdDialog.show({
+                controller: function ($scope, $mdDialog) {
+                    // Method to hide the dialog
+                    $scope.hide = function () {
+                        $mdDialog.hide();
+                    };
+
+                    // Method to cancel the dialog
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    // Boilerplate for season
+                    $scope.updateSeason = angular.copy(season);
+
+                    //Save the form
+                    $scope.save = function () {
+                        SeasonsService.updateSeason($scope.updateSeason).then(function (response) {
+                            if (angular.isString(response)) {
+                                // Show the error
+                                UtilityService.showErrorToast(response);
+                            } else {
+                                $scope.hide();
+                                ctrl.refreshSeasons();
+
+                                if (angular.isObject(response)) {
+                                    // Show success notification
+                                    UtilityService.showSuccessToast("Seizoen " + response.customName + " gewijzigd.");
+                                }
+                            }
+                        }).catch(function (error) {
+                            UtilityService.showErrorToast(error);
+                        });
+                    }
+                },
+                templateUrl: "app/js/pages/seasons/update.html",
+                parent: angular.element(document.body),
+                clickOutsideToClose: true,
+                fullScreen: true
+            });
         };
 
         /**

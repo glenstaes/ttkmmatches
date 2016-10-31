@@ -5,7 +5,7 @@
 			<md-progress-circular ng-if="SeasonsCtrl.loading" md-mode="indeterminate"></md-progress-circular>
 			<md-fab-speed-dial ng-if="!SeasonsCtrl.loading" md-open="SeasonsCtrl.seasonMenuOpen" class="md-scale" md-direction="left">
 				<md-fab-trigger>
-					<md-button aria-label="menu" class="md-fab md-warn">
+					<md-button aria-label="menu" class="md-fab md-accent">
 						<md-icon md-font-icon="fa fa-2x fa-cogs"></md-icon>
 						<md-tooltip md-direction="top">Acties</md-tooltip>
 					</md-button>
@@ -71,7 +71,7 @@
 								Gebruik dit seizoen voor opstellingenbeheer
 							</md-tooltip>
 						</md-button>
-						<md-button>
+						<md-button ng-click="SeasonsCtrl.updateSeason(SeasonsCtrl.selected)">
 							<i class="fa fa-pencil"></i> Wijzig naam
 						</md-button>
 						<md-button>
