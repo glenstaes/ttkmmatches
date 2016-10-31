@@ -27,9 +27,10 @@ Route::group(['middleware' => 'jwt.auth'], function () {
      * Season routes
      */
     Route::post("/seasons", "SeasonController@getSeasons");
-    Route::get("/seasons/get", "SeasonController@getSeason");
+    Route::post("/seasons/get", "SeasonController@getSeason");
     Route::post("/seasons/new", "SeasonController@newSeason");
     Route::post("/seasons/update", "SeasonController@updateName");
     Route::post("/seasons/setcurrent", "SeasonController@setAsCurrent");
     Route::post("/seasons/sync", "SeasonController@syncWithTabT");
+    Route::post("/seasons/delete", "SeasonController@delete");
 });

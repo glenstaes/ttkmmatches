@@ -95,6 +95,34 @@
         };
 
         /**
+         * @function deleteSeason
+         * @description Deletes the season
+         * @param {Object} season - The season 
+         * @returns {Promise} A promise that is resolved when the function has completed
+         */
+        ctrl.deleteSeason = function (season) {
+            if (!season.current) {
+                var deferred = $q.defer();
+
+                ctrl.loading = true;
+
+                SeasonsService.deleteSeason(season.id).then(function (response) {
+                    // Show notification
+                    if (response) {
+                        delete ctrl.selected;
+                        UtilityService.showSuccessToast(season.customName + " verwijderd");
+                    } else
+                        UtilityService.showErrorToast(season.customNaem + " kon niet verwijderd worden");
+                }).finally(function () {
+                    ctrl.refreshSeasons();
+                    deferred.resolve();
+                });
+
+                return deferred.promise;
+            }
+        };
+
+        /**
          * @function showNewSeasonScreen
          * @description Shows the screen to start a new season. 
          * If the TabT seasons were not retrieved yet, it executes prepareForNewSeason() first.

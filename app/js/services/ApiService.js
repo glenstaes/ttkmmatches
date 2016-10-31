@@ -16,6 +16,7 @@
             "seasons-current": "seasons/setcurrent",
             "seasons-update": "seasons/update",
             "seasons-sync": "seasons/sync",
+            "seasons-delete": "seasons/delete",
             tabtmembers: "tabt/members",
             tabtseasons: "tabt/seasons"
         };

@@ -128,6 +128,28 @@ describe("SeasonsController", function () {
         });
     });
 
+    describe("deleteSeason", function(){
+        beforeEach(function(){
+            spyOn(SeasonsService, "deleteSeason").and.returnValue(deferred.promise);
+            spyOn(SeasonsController, "refreshSeasons");
+            spyOn(UtilityService, "showSuccessToast");
+            spyOn(UtilityService, "showErrorToast");
+        });
+
+        it("should delete the season if it is not the current season", function(){
+            SeasonsController.deleteSeason(seasonsList[0]);
+            expect(SeasonsController.loading).toBeTruthy();
+
+            deferred.resolve(true);
+
+            $rootScope.$apply();
+            
+            expect(SeasonsController.selected).toBeUndefined();
+            expect(SeasonsController.refreshSeasons).toHaveBeenCalled();
+            expect(UtilityService.showSuccessToast).toHaveBeenCalledWith("2000-2001 verwijderd");
+        });
+    });
+
     describe("showNewSeasonScreen", function () {
         beforeEach(function () {
             spyOn($mdDialog, "show");

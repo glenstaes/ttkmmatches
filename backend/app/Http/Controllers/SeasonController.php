@@ -153,4 +153,25 @@ class SeasonController extends Controller
 
          return Response::json(Season::find($input["id"]));
      }
+
+     /**
+     * delete
+     *
+     * Deletes the provided season.
+     *
+     * @param (Request) An instance of the Request object. 
+     * @return (Boolean) True or false.
+     */
+     public function delete(Request $request){
+         $deleted = false;
+         $input = Input::only("id");
+
+         $season = Season::find($input["id"]);
+
+         if(!is_null($season)){
+            $deleted = $season->delete();
+         }
+
+         return Response::json($deleted);
+     }
 }

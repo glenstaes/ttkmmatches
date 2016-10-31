@@ -73,9 +73,21 @@
 						</md-button>
 						<md-button ng-click="SeasonsCtrl.updateSeason(SeasonsCtrl.selected)">
 							<i class="fa fa-pencil"></i> Wijzig naam
+							<md-tooltip md-direction="top">
+								Wijzig de getoonde naam van het seizoen
+							</md-tooltip>
 						</md-button>
 						<md-button ng-click="SeasonsCtrl.syncWithTabT(SeasonsCtrl.selected)">
 							<i class="fa fa-refresh"></i> Synchroniseer
+							<md-tooltip md-direction="top">
+								Haal de meest recente gegevens op
+							</md-tooltip>
+						</md-button>
+						<md-button ng-if="!SeasonsCtrl.selected.current" ng-click="SeasonsCtrl.deleteSeason(SeasonsCtrl.selected)">
+							<i class="fa fa-trash"></i> Verwijder
+							<md-tooltip md-direction="top">
+								Verwijder dit seizoen
+							</md-tooltip>
 						</md-button>
 					</md-card-actions>
 				</md-card>

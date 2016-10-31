@@ -101,6 +101,20 @@
             });
         };
 
+        /**
+         * @function deleteSeason
+         * @description Deletes the season
+         * @param {String} seasonId - The id of the season
+         * @returns {Promise} A promise that will be resolved with the a boolean indicating the deletion or rejected with an error
+         */
+        s.deleteSeason = function(seasonId){
+            return Api.quickCall("seasons-delete", {id: seasonId}, {
+                headers: {
+                    "Authorization": "Bearer " + UserService.getUserToken()
+                }
+            });
+        };
+
         return s;
     };
 
