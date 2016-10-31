@@ -53,6 +53,10 @@
                         return SeasonsService.getSeasons();
                     }]
                 }
+            }).when("/gebruikersbeheer", {
+                controller: "UsersController",
+                controllerAs: "UsersCtrl",
+                templateUrl: "app/js/pages/users.html"  
             }).otherwise("/");
 
         });

@@ -29,6 +29,10 @@
                 icon: "fa-trophy",
                 link: "/seizoenen",
                 label: "Seizoenen"
+            },{
+                icon: "fa-user-circle-o",
+                link: "/gebruikersbeheer",
+                label: "Gebruikers"
             }],
             // Fourth group: Logout
             [{

@@ -87,4 +87,30 @@ class Player extends Model
         ])->get();
         return $members;
     }
+
+    /**
+     * Gets the players that have no linked account.
+     */
+    public static function getWithoutAccount(){
+        $currentSeason = Season::getCurrent();
+        $withoutAcc = array();
+
+        if(!is_null($currentSeason)){
+            // Get all the players in the current season
+            $seasonPlayers = Player::where("seasonId", "=", $currentSeason->id)->get();
+            
+            foreach($seasonPlayers as $player){
+                $managedPlayer = ManagedPlayer::where([
+                    ["playerId", "=", $player->uniqueIndex],
+                ])->get();
+
+                // Push if no corresponding managed player is found
+                if($managedPlayer->isEmpty()){
+                    array_push($withoutAcc, $player);
+                }
+            }
+        }
+
+        return $withoutAcc;
+    }
 }

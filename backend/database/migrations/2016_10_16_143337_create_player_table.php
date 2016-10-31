@@ -28,6 +28,8 @@ class CreatePlayerTable extends Migration
 
             $table->foreign("federationId")->references("id")->on("federation")->onDelete("cascade");
             $table->foreign("seasonId")->references("id")->on("season")->onDelete("cascade");
+
+            $table->index("uniqueIndex");
         });
     }
 

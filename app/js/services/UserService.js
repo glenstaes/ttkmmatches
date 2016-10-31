@@ -101,7 +101,29 @@
             us.setUserToken("");
             user = {};
             $window.sessionStorage.removeItem("matches_token");
-        }
+        };
+
+        us.getWithoutAccount = function(){
+            var deferred = $q.defer();
+
+            $http.post(Api.getEndpoint("users-withoutaccount"), undefined, {
+                headers: {
+                    "Authorization": "Bearer " + us.getUserToken()
+                }
+            })
+                .then(function (response) {
+                    if (angular.isDefined(response.data) && angular.isObject(response.data)) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject(response);
+                    }
+                })
+                .catch(function (error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
 
         // Return the service functionality
         return us;

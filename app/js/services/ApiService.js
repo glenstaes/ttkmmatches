@@ -18,7 +18,8 @@
             "seasons-sync": "seasons/sync",
             "seasons-delete": "seasons/delete",
             tabtmembers: "tabt/members",
-            tabtseasons: "tabt/seasons"
+            tabtseasons: "tabt/seasons",
+            "users-withoutaccount": "users/withoutaccount"
         };
 
         /**
