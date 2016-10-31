@@ -73,6 +73,28 @@
         };
 
         /**
+         * @function syncWithTabT
+         * @description Synchronizes the season with the TabT databases
+         * @param {Object} season - The season 
+         * @returns {Promise} A promise that is resolved when the function has completed
+         */
+        ctrl.syncWithTabT = function (season) {
+            var deferred = $q.defer();
+
+            ctrl.loading = true;
+
+            SeasonsService.syncWithTabT(season.id).then(function (response) {
+                // Show success notification
+                UtilityService.showSuccessToast(response.syncResult.importedPlayers + " spelers gesynchroniseerd voor seizoen " + season.customName);
+            }).finally(function () {
+                ctrl.refreshSeasons();
+                deferred.resolve();
+            });
+
+            return deferred.promise;
+        };
+
+        /**
          * @function showNewSeasonScreen
          * @description Shows the screen to start a new season. 
          * If the TabT seasons were not retrieved yet, it executes prepareForNewSeason() first.

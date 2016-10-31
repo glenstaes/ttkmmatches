@@ -35,7 +35,7 @@ class TabTConnection
         $this->connection->Sporta = new SoapClient(constant("TABT_API_SPORTA"));
     }
 
-    public function invoke($method, $vttlRequest, $sportaRequest){
+    public function invoke($method, $vttlRequest = null, $sportaRequest = null){
         $response = app("stdClass");
         switch($method){
             case "GetMembers":

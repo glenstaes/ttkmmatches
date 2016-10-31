@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use App\TabTConnection;
+use App\Player;
+use App\Federation;
 
 class Season extends Model
 {
@@ -49,6 +51,19 @@ class Season extends Model
 
         $response = app("stdClass");
         $response->members = $connection->invoke("GetMembers", $vttlRequest, $sportaRequest);
+
+        return $response;
+    }
+
+    public static function syncWithTabT($season){
+        $response = app("stdClass");
+
+        $data = Season::getTabTData($season->name);
+
+        Player::import($data->members->VTTL->MemberEntries, Federation::find(1), $season);
+        Player::import($data->members->Sporta->MemberEntries, Federation::find(2), $season);
+
+        $response->importedPlayers = $data->members->VTTL->MemberCount + $data->members->Sporta->MemberCount;
 
         return $response;
     }

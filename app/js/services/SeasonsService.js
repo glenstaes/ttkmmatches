@@ -87,6 +87,20 @@
             });
         };
 
+        /**
+         * @function syncWithTabT
+         * @description Updates the season with the latest TabT data
+         * @param {String} seasonId - The id of the season
+         * @returns {Promise} A promise that will be resolved with the data of the season or rejected with an error
+         */
+        s.syncWithTabT = function(seasonId){
+            return Api.quickCall("seasons-sync", {id: seasonId}, {
+                headers: {
+                    "Authorization": "Bearer " + UserService.getUserToken()
+                }
+            });
+        };
+
         return s;
     };
 

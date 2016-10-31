@@ -31,4 +31,5 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post("/seasons/new", "SeasonController@newSeason");
     Route::post("/seasons/update", "SeasonController@updateName");
     Route::post("/seasons/setcurrent", "SeasonController@setAsCurrent");
+    Route::post("/seasons/sync", "SeasonController@syncWithTabT");
 });

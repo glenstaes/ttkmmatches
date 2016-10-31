@@ -67,19 +67,39 @@ class SeasonController extends Controller
         try{
             $input = Input::only("name", "customName");
 
-            $tabtData = Season::getTabTData($input["name"]);
-
             // Save the new season
             $newSeason = Season::create(['name' => $input["name"]]);
             $newSeason->customName = $input["customName"];
             $newSeason->save();
 
-            Player::import($tabtData->members->VTTL->MemberEntries, Federation::find(1), $newSeason);
-            Player::import($tabtData->members->Sporta->MemberEntries, Federation::find(2), $newSeason);
+            $syncResult = Season::syncWithTabT($newSeason);
 
-            $newSeason->importedPlayers = $tabtData->members->VTTL->MemberCount + $tabtData->members->Sporta->MemberCount;
+            $newSeason->importedPlayers = $syncResult->importedPlayers;
 
             return Response::json($newSeason);
+        } catch(\Exception $ex){
+            return Response::json($ex->getMessage());
+        }
+    }
+
+    /**
+     * syncWithTabT
+     *
+     * Synchronizes the provided season with the TabT databases.
+     *
+     * @param (Request) An instance of the Request object. 
+     * @return (Season) The updated season.
+     */
+    public function syncWithTabT(Request $request){
+        try{
+            $input = Input::only("id");
+
+            $season = Season::find($input["id"]);
+
+            if(!is_null($season))
+                $season->syncResult = Season::syncWithTabT($season);
+
+            return Response::json($season);
         } catch(\Exception $ex){
             return Response::json($ex->getMessage());
         }
