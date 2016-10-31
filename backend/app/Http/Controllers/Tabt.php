@@ -7,34 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Response as Response;
 
-use SoapClient;
+use App\TabTConnection;
 
 class Tabt extends Controller
 {
-    /**
-     * __construct
-     *
-     * Sets the api urls as a constant.
-     */
-    public function __construct(){
-        define("TABT_API_VTTL", "http://api.vttl.be/0.7/?wsdl");
-        define("TABT_API_SPORTA", "http://ttonline.sporta.be/api/?wsdl");
-    }
-
-    /**
-     * connectToTabT
-     *
-     * Uses the api urls to instantiate an object with a SoapClient for the Api's.
-     *
-     * @return (object) An object containing two attributes with a SoapClient instance.
-     */
-    private function connectToTabT(){
-        $connections = app("stdClass");
-        $connections->VTTL = new SoapClient(constant("TABT_API_VTTL"));
-        $connections->Sporta = new SoapClient(constant("TABT_API_SPORTA"));
-        return $connections;
-    }
-
     /**
      * getMembers
      *
@@ -46,19 +22,12 @@ class Tabt extends Controller
      */
     public function getMembers(Request $request){
         try{
-            $connection = $this->connectToTabT();
+            $connection = new TabTConnection();
 
-            // VTTL
             $vttlRequest = array("Club" => "A141");
-            $vttlMembers = $connection->VTTL->GetMembers($vttlRequest);
-
-            // Sporta
             $sportaRequest = array("Club" => "1252");
-            $sportaMembers = $connection->Sporta->GetMembers($sportaRequest);
 
-            $response = app("stdClass");
-            $response->VTTL = $vttlMembers;
-            $response->Sporta = $sportaMembers;
+            $response = $connection->invoke("GetMembers", $vttlRequest, $sportaRequest);
 
             return Response::json($response);
         } catch(\Exception $ex){
@@ -75,9 +44,9 @@ class Tabt extends Controller
      */
     public function getSeasons(Request $request){
         try{
-            $connection = $this->connectToTabT();
+            $connection = new TabTConnection();
 
-            return Response::json($connection->VTTL->GetSeasons());
+            return Response::json($connection->invoke("GetSeasons"));
         } catch(\Exception $ex){
             return Response::json($ex->getMessage());
         }

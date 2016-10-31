@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\TabTConnection;
+
 class Season extends Model
 {
     /**
@@ -32,5 +34,22 @@ class Season extends Model
             return null;
         else
             return $current[0];
+    }
+
+    public static function getTabTData($seasonName){
+        $connection = new TabTConnection();
+
+        // Get the teams
+
+        /***** Get the members *****/
+        $vttlRequest = array("Club" => "A141", "Season" => intval(substr($seasonName, -2)));
+        $sportaRequest = array("Club" => "1252", "Season" => intval(substr($seasonName, -2)));
+
+        // Get the matches
+
+        $response = app("stdClass");
+        $response->members = $connection->invoke("GetMembers", $vttlRequest, $sportaRequest);
+
+        return $response;
     }
 }
