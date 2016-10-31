@@ -108,6 +108,26 @@ describe("SeasonsController", function () {
         });
     });
 
+    describe("syncWithTabT", function(){
+        beforeEach(function(){
+            spyOn(SeasonsService, "syncWithTabT").and.returnValue(deferred.promise);
+            spyOn(SeasonsController, "refreshSeasons");
+            spyOn(UtilityService, "showSuccessToast");
+        })
+
+        it("should sync with the TabT database", function(){
+            SeasonsController.syncWithTabT(seasonsList[0]);
+            expect(SeasonsController.loading).toBeTruthy();
+
+            deferred.resolve({ name: "2000-2001", customName: "2001", isCurrent: true, syncResult: { importedPlayers: 100 } });
+
+            $rootScope.$apply();
+            
+            expect(SeasonsController.refreshSeasons).toHaveBeenCalled();
+            expect(UtilityService.showSuccessToast).toHaveBeenCalledWith("100 spelers gesynchroniseerd voor seizoen 2001");
+        });
+    });
+
     describe("showNewSeasonScreen", function () {
         beforeEach(function () {
             spyOn($mdDialog, "show");

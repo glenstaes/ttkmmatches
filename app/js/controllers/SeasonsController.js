@@ -85,7 +85,7 @@
 
             SeasonsService.syncWithTabT(season.id).then(function (response) {
                 // Show success notification
-                UtilityService.showSuccessToast(response.syncResult.importedPlayers + " spelers gesynchroniseerd voor seizoen " + season.customName);
+                UtilityService.showSuccessToast(response.syncResult.importedPlayers + " spelers gesynchroniseerd voor seizoen " + response.customName);
             }).finally(function () {
                 ctrl.refreshSeasons();
                 deferred.resolve();

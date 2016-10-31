@@ -15,6 +15,7 @@ describe("SeasonsService", function () {
         $httpBackend.when("POST", ApiService.getEndpoint("seasons-single")).respond(seasonsList[0]);
         $httpBackend.when("POST", ApiService.getEndpoint("seasons-current")).respond(seasonsList);
         $httpBackend.when("POST", ApiService.getEndpoint("seasons-update")).respond(seasonsList);
+        $httpBackend.when("POST", ApiService.getEndpoint("seasons-sync")).respond(seasonsList[0]);
     }));
 
     describe(".getTabTSeasons", function () {
@@ -74,6 +75,23 @@ describe("SeasonsService", function () {
 
             SeasonsService.setAsCurrent(1).then(function (response) {
                 expect(response.length).toBe(1);
+            }).finally(function () {
+                done();
+
+                $httpBackend.verifyNoOutstandingExpectation();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+
+            $httpBackend.flush();
+        });
+    });
+
+    describe(".syncWithTabT", function(){
+        it("should sync with the TabT api", function(){
+            $httpBackend.expectPOST(ApiService.getEndpoint("seasons-sync"));
+
+            SeasonsService.syncWithTabT(1).then(function (response) {
+                expect(response.id).toBe(1);
             }).finally(function () {
                 done();
 
