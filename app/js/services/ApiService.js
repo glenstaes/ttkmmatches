@@ -1,6 +1,6 @@
-(function(){
+(function () {
 
-    var ApiService = function($q, $http){
+    var ApiService = function ($q, $http) {
         // Declaration
         var apiUrl = "http://backend.ttkmmatches/";
 
@@ -9,6 +9,7 @@
 
         // Define the endpoints
         api.ENDPOINTS = {
+            "accounts-all": "users/all",
             "login": "signin",
             "relationtypes-all": "relationtypes/all",
             "seasons": "seasons",
@@ -31,7 +32,7 @@
          * @param {String} endpoint - The name of an endpoint
          * @returns {String} The full url of the endpoint
          */
-        api.getEndpoint = function(endpoint){
+        api.getEndpoint = function (endpoint) {
             return [apiUrl, api.ENDPOINTS[endpoint] || ""].join("");
         };
 
@@ -42,16 +43,16 @@
          * @param {Object} [data] - The data to send
          * @returns {Promise} A primise that is rejected when an error occurred or resolved with the response data
          */
-        api.quickCall = function(endpoint, data, options){
+        api.quickCall = function (endpoint, data, options) {
             var deferred = $q.defer();
 
-            $http.post(api.getEndpoint(endpoint), data, options).then(function(response){
-                if(angular.isObject(response)){
+            $http.post(api.getEndpoint(endpoint), data, options).then(function (response) {
+                if (angular.isObject(response)) {
                     deferred.resolve(response.data);
                 } else {
                     deferred.reject(response);
                 }
-            }).catch(function(error){
+            }).catch(function (error) {
                 deferred.reject(error);
             });
 

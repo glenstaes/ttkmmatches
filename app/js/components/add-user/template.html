@@ -1,7 +1,36 @@
 <md-tabs class="md-accent" md-dynamic-height>
-    <md-tab label="Bestaand account">
+    <md-tab label="Bestaand account" ng-disabled="$ctrl.existingAccounts.length === 0">
         <md-content layout-padding>
             <p>Selecteer bestaande accounts die je wil koppelen:</p>
+
+            <md-progress-linear class="md-accent" ng-if="$ctrl.isLoadingAccounts" md-mode="query"></md-progress-linear>
+            <table ng-if="$ctrl.existingAccounts.length" st-table="$ctrl.existingAccounts" class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Persoon</th>
+                        <th>Emailadres</th>
+                        <th>Relatie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="account in $ctrl.existingAccounts">
+                        <td>
+                            <md-checkbox ng-model="account.attachToPlayer.enabled" aria-label="Attach to player"></md-checkbox>
+                        </td>
+                        <td>{{ account.firstName }} {{ account.lastName }}</td>
+                        <td>{{ account.email }}</td>
+                        <td>
+                            <md-input-container ng-if="account.attachToPlayer.enabled">
+                                <label>Relatie tot speler</label>
+                                <md-select ng-disabled="!$ctrl.relationTypes.length" ng-model="account.attachToPlayer.relationType" required>
+                                    <md-option ng-repeat="relationType in $ctrl.relationTypes" ng-value="relationType">{{ relationType.name }}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </md-content>
     </md-tab>
     <md-tab label="Nieuw account">

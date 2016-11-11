@@ -5,6 +5,8 @@
 
         // Instantiate form
         ctrl.relationTypes = [];
+        ctrl.existingAccounts = [];
+        ctrl.isLoadingAccounts = true;
 
         // Bind player data
         ctrl.newAccount = {
@@ -16,6 +18,12 @@
         // Get all the relation types
         RelationTypesService.getAllCached().then(function (result) {
             ctrl.relationTypes = result;
+        });
+
+        // Get all the accounts
+        UserService.getAccounts().then(function(result){
+            ctrl.isLoadingAccounts = false;
+            ctrl.existingAccounts = result;
         });
 
         /**

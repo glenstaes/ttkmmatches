@@ -117,6 +117,19 @@
         };
 
         /**
+         * @function getAccounts
+         * @description Gets all the accounts from the api
+         * @return {Promise} A promise that is resolved with all the data from the accounts
+         */
+        us.getAccounts = function(){
+            return Api.quickCall("accounts-all", undefined, {
+                headers: {
+                    "Authorization": "Bearer " + us.getUserToken()
+                }
+            });
+        };
+
+        /**
          * @function getWithAccount
          * @description Gets the players with an account attached to them.
          * @return {Promise} A promise that is resolved with the data of all the players without an account.
