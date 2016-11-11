@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Player;
+
 class ManagedPlayer extends Model
 {
     /**
@@ -24,4 +26,11 @@ class ManagedPlayer extends Model
 
     // The table
     protected $table = "managedplayer";
+
+    /**
+     * Gets the ManagedPlayers for a player
+     */
+    public static function getByPlayer(Player $player){
+        return ManagedPlayer::where("playerId", "=", $player->uniqueIndex)->get();
+    }
 }

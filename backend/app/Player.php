@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Federation as Federation;
+use App\ManagedPlayer;
 
 class Player extends Model
 {
@@ -27,6 +28,25 @@ class Player extends Model
 
     // The table
     protected $table = "player";
+
+    /**
+     * Gets the accounts for the current player
+     */
+    public function getAccounts(){
+        $managedPlayers = ManagedPlayer::getByPlayer($this);
+        
+        if($managedPlayers->isEmpty()){
+            return [];
+        } else {
+            $accounts = [];
+
+            foreach($managedPlayers as $managedPlayer){
+                array_push($accounts, User::find($managedPlayer->userId));
+            }
+
+            return $accounts;
+        }
+    }
 
     /**
      * Imports the given members for the given season.
@@ -129,5 +149,30 @@ class Player extends Model
         }
 
         return $withoutAcc;
+    }
+
+    /**
+     * Gets the players that have a linked account
+     */
+    public static function getWithAccount(){
+        $withAccount = [];
+
+        $allPlayers = Player::getBySeason(Season::getCurrent());
+
+        // Loop VTTL
+        foreach($allPlayers->VTTL as $player){
+            $player->accounts = $player->getAccounts();
+            if(count($player->accounts))
+                array_push($withAccount, $player);
+        }
+
+        // Loop Sporta
+        foreach($allPlayers->Sporta as $player){
+            $player->accounts = $player->getAccounts();
+            if(count($player->accounts))
+                array_push($withAccount, $player);
+        }
+
+        return $withAccount;
     }
 }

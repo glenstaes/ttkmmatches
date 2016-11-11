@@ -13,6 +13,7 @@ use App\Player;
 use App\ManagedPlayer;
 use App\User;
 use App\Error;
+use App\Season;
 
 class UserController extends Controller
 {
@@ -21,6 +22,13 @@ class UserController extends Controller
      */
     public function getWithoutAccount(Request $request){
         return Response::json(Player::getWithoutAccount());
+    }
+
+    /**
+     * Gets the players with an account
+     */
+    public function getWithAccount(Request $request){
+        return Response::json(Player::getWithAccount());
     }
 
     /**
