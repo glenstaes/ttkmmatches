@@ -23,7 +23,8 @@ class ErrorsSeeder extends Seeder
         Error::create(["code" => "JUNO-AUTH-00006", "message" => "User already exists"]);
 
         // Attaching players
-        Error::create(["code" => "JUNO-AUTH-10001", "message" => "The relationTypeId field has not been set"]);
+        Error::create(["code" => "JUNO-PLAY-10001", "message" => "The relationTypeId field has not been set"]);
+        Error::create(["code" => "JUNO-PLAY-10002", "message" => "The player was not found"]);
         
         // Logging in
         Error::create(["code" => "JUNO-AUTH-00101", "message" => "Invalid credentials"]);

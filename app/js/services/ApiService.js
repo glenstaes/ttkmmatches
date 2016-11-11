@@ -21,6 +21,7 @@
             "seasons-delete": "seasons/delete",
             "tabtmembers": "tabt/members",
             "tabtseasons": "tabt/seasons",
+            "users-attachaccounts": "users/attachaccounts",
             "users-newaccount": "users/newaccount",
             "users-withaccount": "users/withaccount",
             "users-withoutaccount": "users/withoutaccount"

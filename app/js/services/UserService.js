@@ -1,6 +1,6 @@
-(function () {
+(function() {
 
-    var UserService = function ($http, $location, $q, $window, Api) {
+    var UserService = function($http, $location, $q, $window, Api) {
         // Declaration
         var userToken = "";         // Local copy of the user token
         var user = {};              // Local copy of the user
@@ -13,7 +13,7 @@
          * @description Sets the user token variable of the service with a user token.
          * @param {String} value - The value to set as the user token.
          */
-        us.setUserToken = function (value) {
+        us.setUserToken = function(value) {
             userToken = value;
             $window.sessionStorage.setItem("matches_token", userToken);
         };
@@ -23,7 +23,7 @@
          * @description Gets the user token
          * @returns {String} The user token or undefined
          */
-        us.getUserToken = function () {
+        us.getUserToken = function() {
             if (userToken && userToken !== "")
                 return userToken;
             return undefined;
@@ -34,7 +34,7 @@
          * @description Checks whether the user is logged in. If the service doesn't know about a user token
          * it assumes that the user is logged in.
          */
-        us.isLoggedIn = function () {
+        us.isLoggedIn = function() {
             if (userToken !== null && userToken !== "")
                 return true;
 
@@ -50,7 +50,7 @@
          * @function redirectIfNotLoggedIn
          * @description Redirects the user to the login page if he is not logged in.
          */
-        us.redirectIfNotLoggedIn = function () {
+        us.redirectIfNotLoggedIn = function() {
             if (!us.isLoggedIn())
                 $location.path("/login");
         };
@@ -59,7 +59,7 @@
          * @function redirectIfLoggedIn
          * @description Redirects the user to the dashboard if he is logged in.
          */
-        us.redirectIfLoggedIn = function () {
+        us.redirectIfLoggedIn = function() {
             if (us.isLoggedIn())
                 $location.path("/dashboard");
         }
@@ -71,11 +71,11 @@
          * @param {String} password - The password of the user.
          * @returns {Promise} A promise that is rejected when an error occurred.
          */
-        us.login = function (email, password) {
+        us.login = function(email, password) {
             var deferred = $q.defer();
 
             $http.post(Api.getEndpoint("login"), JSON.stringify({ email: email, password: password }))
-                .then(function (response) {
+                .then(function(response) {
                     if (angular.isDefined(response.data.token) && response.data.user.confirmed) {
                         // Success response
                         us.setUserToken(response.data.token);
@@ -86,7 +86,7 @@
                         deferred.reject(response.data);
                     }
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     deferred.reject(error);
                 });
 
@@ -97,7 +97,7 @@
          * @function logout
          * @description Logs out the user. It is sufficient to only remove the local copies of the session.
          */
-        us.logout = function () {
+        us.logout = function() {
             us.setUserToken("");
             user = {};
             $window.sessionStorage.removeItem("matches_token");
@@ -108,7 +108,7 @@
          * @description Gets the players without an account attached to them.
          * @return {Promise} A promise that is resolved with the data of all the players without an account.
          */
-        us.getWithoutAccount = function () {
+        us.getWithoutAccount = function() {
             return Api.quickCall("users-withoutaccount", undefined, {
                 headers: {
                     "Authorization": "Bearer " + us.getUserToken()
@@ -121,7 +121,7 @@
          * @description Gets all the accounts from the api
          * @return {Promise} A promise that is resolved with all the data from the accounts
          */
-        us.getAccounts = function(){
+        us.getAccounts = function() {
             return Api.quickCall("accounts-all", undefined, {
                 headers: {
                     "Authorization": "Bearer " + us.getUserToken()
@@ -134,7 +134,7 @@
          * @description Gets the players with an account attached to them.
          * @return {Promise} A promise that is resolved with the data of all the players without an account.
          */
-        us.getWithAccount = function () {
+        us.getWithAccount = function() {
             return Api.quickCall("users-withaccount", undefined, {
                 headers: {
                     "Authorization": "Bearer " + us.getUserToken()
@@ -153,13 +153,30 @@
          * @param {string} [account.relationTypeId] - The unique index of the relationtype that associates the account to the player
          * @return {Promise} A promise that is resolved with the data of the new account.
          */
-        us.saveNewAccount = function (account) {
+        us.saveNewAccount = function(account) {
             return Api.quickCall("users-newaccount", account, {
                 headers: {
                     "Authorization": "Bearer " + us.getUserToken()
                 }
             });
         };
+
+        /**
+         * @function attachAccounts
+         * @description Attaches accounts to players
+         * @param {string} playerId - The id of the player
+         * @param {Object[]} managedPlayers - The accounts to attach
+         * @param {string} managedPlayers.userId - The id of the account
+         * @param {string} managedPlayers.relationTypeId - The id of the relation type
+         * @return {Promise} A promise that is resolved with the data of the user after attaching the accounts.
+         */
+        us.attachAccounts = function(playerId, managedPlayers) {
+            return Api.quickCall("users-attachaccounts", { playerId: playerId, managedPlayers: managedPlayers }, {
+                headers: {
+                    "Authorization": "Bearer " + us.getUserToken()
+                }
+            });
+        }
 
         // Return the service functionality
         return us;

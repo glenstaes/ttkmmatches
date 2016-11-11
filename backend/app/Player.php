@@ -49,6 +49,40 @@ class Player extends Model
     }
 
     /**
+     * Attaches existing accounts to the player
+     */
+    public function attachAccounts($accounts, $relationTypeIds){
+        if(!is_array($accounts)){
+            $accounts = [$accounts];
+        }
+
+        for($ii = 0, $llen = count($accounts); $ii < $llen; $ii++){
+            $account = $accounts[$ii];
+            $relationType = $relationTypeIds[$ii];
+
+            // Check whether the account is already attached to the player
+            $managingAccounts = $this->getAccounts();
+            $isManagingAccount = false;
+
+            for($i = 0, $len = count($managingAccounts); $i < $len && !$isManagingAccount; $i++){
+                $currentManagingAccount = $managingAccounts[$i];
+
+                if($currentManagingAccount->id == $account->id){
+                    $isManagingAccount = true;
+                }
+            }
+
+            if(!$isManagingAccount){
+                ManagedPlayer::create([
+                    "playerId" => $this->uniqueIndex,
+                    "userId" => $account->id,
+                    "relationTypeId" => $relationType
+                ]);
+            }
+        }
+    }
+
+    /**
      * Imports the given members for the given season.
      *
      * @param (object[]) An array of member entries

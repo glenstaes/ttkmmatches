@@ -1,7 +1,9 @@
 <md-tabs class="md-accent" md-dynamic-height>
     <md-tab label="Bestaand account" ng-disabled="$ctrl.existingAccounts.length === 0">
-        <md-content layout-padding>
+        <md-content layout="column" layout-padding>
             <p>Selecteer bestaande accounts die je wil koppelen:</p>
+
+            <md-button class="md-primary md-raised" ng-click="$ctrl.attachAccounts($ctrl.existingAccounts)" ng-disabled="!$ctrl.isExistingAccountSelected()">Toevoegen</md-button>
 
             <md-progress-linear class="md-accent" ng-if="$ctrl.isLoadingAccounts" md-mode="query"></md-progress-linear>
             <table ng-if="$ctrl.existingAccounts.length" st-table="$ctrl.existingAccounts" class="table">

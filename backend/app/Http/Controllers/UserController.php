@@ -32,6 +32,33 @@ class UserController extends Controller
     }
 
     /**
+     * Attaches accounts to a player
+     */
+    public function attachAccounts(Request $request){
+        $input = Input::only("playerId", "managedPlayers");
+
+        $accounts = [];
+        $relationTypeIds = [];
+
+        foreach($input["managedPlayers"] as $managedPlayer){
+            array_push($accounts, User::find($managedPlayer['userId']));
+            array_push($relationTypeIds, $managedPlayer['relationTypeId']);
+        }
+
+        // Get the player
+        $player = Player::getByUniqueIndex($input["playerId"]);
+        if(!$player->isEmpty()){
+            $player = $player[0];
+            $player->attachAccounts($accounts, $relationTypeIds);
+
+            $player->accounts = $player->getAccounts();
+            return Response::json($player);
+        } else {
+            Response::json(Error::getByCode("JUNO-PLAY-10002"), 500);
+        }
+    }
+
+    /**
      * Gets all the accounts
      */
     public function getAccounts(Request $request){
