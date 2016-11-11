@@ -108,7 +108,7 @@
          * @description Gets the players without an account attached to them.
          * @return {Promise} A promise that is resolved with the data of all the players without an account.
          */
-        us.getWithoutAccount = function(){
+        us.getWithoutAccount = function () {
             var deferred = $q.defer();
 
             $http.post(Api.getEndpoint("users-withoutaccount"), undefined, {
@@ -141,7 +141,7 @@
          * @param {string} [account.relationTypeId] - The unique index of the relationtype that associates the account to the player
          * @return {Promise} A promise that is resolved with the data of the new account.
          */
-        us.saveNewAccount = function(account){
+        us.saveNewAccount = function (account) {
             return Api.quickCall("users-newaccount", account, {
                 headers: {
                     "Authorization": "Bearer " + us.getUserToken()

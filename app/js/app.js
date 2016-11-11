@@ -56,7 +56,12 @@
             }).when("/gebruikersbeheer", {
                 controller: "UsersController",
                 controllerAs: "UsersCtrl",
-                templateUrl: "app/js/pages/users.html"  
+                templateUrl: "app/js/pages/users.html",
+                resolve: {
+                    _withoutAccount: ["UserService", function(UserService){
+                        return UserService.getWithoutAccount();
+                    }]
+                }  
             }).otherwise("/");
 
         });

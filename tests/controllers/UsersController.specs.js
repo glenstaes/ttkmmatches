@@ -1,6 +1,7 @@
 describe("UsersController", function(){
     var UsersController, UtilityService, UserService, $mdDialog;
     var $injector, $controller, $rootScope;
+    var playersWithoutAccount = [{ id: 1 }];
 
     beforeEach(function(){
         module("matches");
@@ -14,23 +15,19 @@ describe("UsersController", function(){
             UtilityService = $injector.get("UtilityService");
             $mdDialog = $injector.get("$mdDialog");
 
-            spyOn(UserService, "getWithoutAccount").and.callThrough();
-
             UsersController = $controller("UsersController", {
                 UtilityService: UtilityService,
-                UserService: UserService
+                UserService: UserService,
+                _withoutAccount: playersWithoutAccount
             });
         });
     });
 
     it("should do stuff upon initilization", function(){
-        expect(UsersController.playersWithoutAccount).toEqual([]);
-
-        expect(UserService.getWithoutAccount).toHaveBeenCalled();
+        expect(UsersController.playersWithoutAccount).toEqual(playersWithoutAccount);
     });
 
     describe("openNewAccountDialog", function(){
-
         beforeEach(function(){
             spyOn($mdDialog, "show");
         });
@@ -40,6 +37,17 @@ describe("UsersController", function(){
 
             expect($mdDialog.show).toHaveBeenCalled();
         });
-
     });
+
+    describe("refreshLists", function(){
+        beforeEach(function(){
+            spyOn(UserService, "getWithoutAccount").and.callThrough();
+        });
+
+        it("should refresh all the lists", function(){
+            UsersController.refreshLists();
+
+            expect(UserService.getWithoutAccount).toHaveBeenCalled();
+        });
+    })
 });
