@@ -42,6 +42,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     /**
      * User routes
      */
+    Route::post("/users/all", "UserController@getAccounts");
      Route::post("/users/withoutaccount", "UserController@getWithoutAccount");
      Route::post("/users/withaccount", "UserController@getWithAccount");
      Route::post("/users/newaccount", "UserController@newUser");

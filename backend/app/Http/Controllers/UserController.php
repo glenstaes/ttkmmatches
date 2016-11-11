@@ -32,6 +32,13 @@ class UserController extends Controller
     }
 
     /**
+     * Gets all the accounts
+     */
+    public function getAccounts(Request $request){
+        return Response::json(User::all());
+    }
+
+    /**
      * Creates an account and attaches it to a player if possible
      */
     public function newUser(Request $request){
