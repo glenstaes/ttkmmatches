@@ -89,6 +89,23 @@ class Player extends Model
     }
 
     /**
+     * Gets the player for the unique index. If no season is specified, the current season is taken.
+     *
+     * @param (string) The unique index of the player
+     * @param (Season) The season to get the player from
+     * @return (Object) The results of the query
+     */
+    public static function getByUniqueIndex($uniqueIndex, Season $season = null){
+        if(is_null($season))
+            $season = Season::getCurrent();
+
+        return Player::where([
+            ["seasonId", "=", $season->id],
+            ["uniqueIndex", "=", $uniqueIndex]
+        ])->get();
+    }
+
+    /**
      * Gets the players that have no linked account.
      */
     public static function getWithoutAccount(){

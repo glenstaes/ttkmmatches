@@ -16,7 +16,7 @@ class CreateUserTable extends Migration
             $table->increments("id");
             $table->string("firstName",255);
             $table->string("lastName",255);
-            $table->string("email",511);
+            $table->string("email",255)->unique();
             $table->text("password");
             $table->boolean("confirmed");
             $table->string("confirmationCode", 255);

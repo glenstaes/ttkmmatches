@@ -13,12 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::newUser(array(
+        $user = User::newUser(array(
             "firstName"=>"Glen",
             "lastName"=>"Staes",
             "email"=>"staeseke@gmail.com",
             "password"=>Hash::make("test")
         ));
+        $user->confirmed = true;
+        $user->save();
+        
         $this->call(ErrorsSeeder::class);
         $this->call(FederationSeeder::class);
         $this->call(RelationTypeSeeder::class);

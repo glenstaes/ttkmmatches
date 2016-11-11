@@ -21,6 +21,9 @@ class ErrorsSeeder extends Seeder
         Error::create(["code" => "JUNO-AUTH-00004", "message" => "The lastName field has not been set"]);
         Error::create(["code" => "JUNO-AUTH-00005", "message" => "A user with this email already exists"]);
         Error::create(["code" => "JUNO-AUTH-00006", "message" => "User already exists"]);
+
+        // Attaching players
+        Error::create(["code" => "JUNO-AUTH-10001", "message" => "The relationTypeId field has not been set"]);
         
         // Logging in
         Error::create(["code" => "JUNO-AUTH-00101", "message" => "Invalid credentials"]);
