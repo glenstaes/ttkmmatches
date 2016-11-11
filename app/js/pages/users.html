@@ -1,10 +1,52 @@
 <md-content layout="row" layout-padding flex>
 	<div layout="column" flex>
-		<header layout="row" layout-align="space-between center">
-			<h1>Gebruikersbeheer</h1>
+		<header>
+			<md-content>
+				<h1>Gebruikersbeheer</h1>
+			</md-content>
 		</header>
-		<section layout="row">
-			
+		<section layout-padding>
+			<md-card>
+				<md-tabs class="md-accent" md-dynamic-height flex>
+					<md-tab label="Zonder account" ng-if="UsersCtrl.playersWithoutAccount.length">
+						<md-content layout-padding>
+							<table st-table="UsersCtrl.playersWithoutAccount" class="table">
+								<thead>
+									<tr>
+										<th>Acties</th>
+										<th>Bond</th>
+										<th>Lidnummer</th>
+										<th>Voornaam</th>
+										<th>Familienaam</th>
+										<th>Klassement</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="player in UsersCtrl.playersWithoutAccount">
+										<td></td>
+										<td>{{ player.federationId === 1 ? "VTTL" : "Sporta" }}</td>
+										<td>{{ player.uniqueIndex }}</td>
+										<td>{{ player.firstName }}</td>
+										<td>{{ player.lastName }}</td>
+										<td>{{ player.ranking }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</md-content>
+					</md-tab>
+					<md-tab label="VTTL">
+						<md-content layout-padding>
+							VTTL Users
+						</md-content>
+					</md-tab>	
+					<md-tab label="Sporta">
+						<md-content layout-padding>
+							Sporta Users
+						</md-content>
+					</md-tab>	
+				</md-tabs>
+			</md-card>
+
 		</section>
 	</div>
 </md-content>

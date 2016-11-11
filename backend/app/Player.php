@@ -97,7 +97,7 @@ class Player extends Model
 
         if(!is_null($currentSeason)){
             // Get all the players in the current season
-            $seasonPlayers = Player::where("seasonId", "=", $currentSeason->id)->get();
+            $seasonPlayers = Player::where("seasonId", "=", $currentSeason->id)->orderBy("lastName")->orderBy("firstName")->get();
             
             foreach($seasonPlayers as $player){
                 $managedPlayer = ManagedPlayer::where([
