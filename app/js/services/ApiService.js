@@ -20,6 +20,7 @@
             "seasons-delete": "seasons/delete",
             "tabtmembers": "tabt/members",
             "tabtseasons": "tabt/seasons",
+            "users-newaccount": "users/newaccount",
             "users-withoutaccount": "users/withoutaccount"
         };
 

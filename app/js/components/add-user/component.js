@@ -1,6 +1,6 @@
-(function(){
+(function () {
 
-    var addUserComponent = function(RelationTypesService, $scope){
+    var addUserComponent = function (RelationTypesService, UserService, U, $scope) {
         var ctrl = this;
 
         // Instantiate form
@@ -14,7 +14,7 @@
         }
 
         // Get all the relation types
-        RelationTypesService.getAllCached().then(function(result){
+        RelationTypesService.getAllCached().then(function (result) {
             ctrl.relationTypes = result;
         });
 
@@ -23,18 +23,31 @@
          * @description Saves a new account that is attached to the player
          * @param {Object} account - The new account
          */
-        ctrl.saveNewAccount = function(account){
-            alert("TODO");
-            $scope.$emit("users.account.added", account);
+        ctrl.saveNewAccount = function (account) {
+            var saveData = {
+                firstName: account.firstName,
+                lastName: account.lastName,
+                email: account.email,
+                playerUniqueIndex: ctrl.player.uniqueIndex,
+                relationTypeId: account.relationType.id
+            }
+
+            // Save
+            UserService.saveNewAccount(saveData).then(function (result) {
+                U.showSuccessToast("Account created for " + result.firstName + " " + result.lastName);
+                $scope.$emit("users.account.added", result);
+            }).catch(function (error) {
+                U.showErrorToast("Could not save account: " + error);
+            });
         }
     };
 
     angular.module("matches").component("addUser", {
         templateUrl: "app/js/components/add-user/template.html",
-        controller: ["RelationTypesService", "$scope", addUserComponent],
+        controller: ["RelationTypesService", "UserService", "UtilityService", "$scope", addUserComponent],
         bindings: {
             player: "<"
         }
     });
-    
+
 })();
