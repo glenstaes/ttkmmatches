@@ -1,5 +1,5 @@
 describe("UsersController", function(){
-    var UsersController, UtilityService, UserService;
+    var UsersController, UtilityService, UserService, $mdDialog;
     var $injector, $controller, $rootScope;
 
     beforeEach(function(){
@@ -12,6 +12,7 @@ describe("UsersController", function(){
 
             UserService = $injector.get("UserService");
             UtilityService = $injector.get("UtilityService");
+            $mdDialog = $injector.get("$mdDialog");
 
             spyOn(UserService, "getWithoutAccount").and.callThrough();
 
@@ -26,5 +27,19 @@ describe("UsersController", function(){
         expect(UsersController.playersWithoutAccount).toEqual([]);
 
         expect(UserService.getWithoutAccount).toHaveBeenCalled();
+    });
+
+    describe("openNewAccountDialog", function(){
+
+        beforeEach(function(){
+            spyOn($mdDialog, "show");
+        });
+
+        it("should open the dialog for a new user", function(){
+            UsersController.openNewAccountDialog();
+
+            expect($mdDialog.show).toHaveBeenCalled();
+        });
+
     });
 });

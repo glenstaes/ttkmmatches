@@ -1,0 +1,32 @@
+<md-tabs class="md-accent" md-dynamic-height>
+    <md-tab label="Bestaand account">
+        <md-content layout-padding>
+            <p>Selecteer bestaande accounts die je wil koppelen:</p>
+        </md-content>
+    </md-tab>
+    <md-tab label="Nieuw account">
+        <md-content layout="column" layout-padding>
+            <form name="newAccountForm" layout="column">
+                <md-input-container>
+                    <label>Voornaam</label>
+                    <input type="text" name="firstName" ng-model="$ctrl.newAccount.firstName" required />
+                </md-input-container>
+                <md-input-container>
+                    <label>Familienaam</label>
+                    <input type="text" name="lastName" ng-model="$ctrl.newAccount.lastName" required />
+                </md-input-container>
+                <md-input-container>
+                    <label>Email</label>
+                    <input type="email" name="email" ng-model="$ctrl.newAccount.email" required />
+                </md-input-container>
+                <md-input-container>
+                    <label>Relatie tot speler</label>
+                    <md-select ng-disabled="!$ctrl.relationTypes.length" ng-model="$ctrl.newAccount.relationType" required>
+                        <md-option ng-repeat="relationType in $ctrl.relationTypes" ng-value="relationType">{{ relationType.name }}</md-option>
+                    </md-select>
+                </md-input-container>
+            </form>
+            <md-button class="md-primary md-raised" ng-click="$ctrl.saveNewAccount($ctrl.newAccount)" ng-disabled="newAccountForm.$invalid">Toevoegen</md-button>
+        </md-content>
+    </md-tab>
+</md-tabs>

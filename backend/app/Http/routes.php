@@ -24,6 +24,11 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post("/tabt/seasons", "Tabt@getSeasons");
 
     /**
+     * RelationType routes
+     */
+    Route::post("/relationtypes/all", "RelationTypeController@getAll");
+
+    /**
      * Season routes
      */
     Route::post("/seasons", "SeasonController@getSeasons");

@@ -23,7 +23,9 @@
 								</thead>
 								<tbody>
 									<tr ng-repeat="player in UsersCtrl.playersWithoutAccount">
-										<td></td>
+										<td>
+											<i ng-click="UsersCtrl.openNewAccountDialog(player)" class="clickable fa fa-user-plus"></i>
+										</td>
 										<td>{{ player.federationId === 1 ? "VTTL" : "Sporta" }}</td>
 										<td>{{ player.uniqueIndex }}</td>
 										<td>{{ player.firstName }}</td>

@@ -9,16 +9,17 @@
 
         // Define the endpoints
         api.ENDPOINTS = {
-            login: "signin",
-            seasons: "seasons",
+            "login": "signin",
+            "relationtypes-all": "relationtypes/all",
+            "seasons": "seasons",
             "seasons-new": "seasons/new",
             "seasons-single": "seasons/get",
             "seasons-current": "seasons/setcurrent",
             "seasons-update": "seasons/update",
             "seasons-sync": "seasons/sync",
             "seasons-delete": "seasons/delete",
-            tabtmembers: "tabt/members",
-            tabtseasons: "tabt/seasons",
+            "tabtmembers": "tabt/members",
+            "tabtseasons": "tabt/seasons",
             "users-withoutaccount": "users/withoutaccount"
         };
 
