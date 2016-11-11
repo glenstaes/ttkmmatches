@@ -109,25 +109,24 @@
          * @return {Promise} A promise that is resolved with the data of all the players without an account.
          */
         us.getWithoutAccount = function () {
-            var deferred = $q.defer();
-
-            $http.post(Api.getEndpoint("users-withoutaccount"), undefined, {
+            return Api.quickCall("users-withoutaccount", undefined, {
                 headers: {
                     "Authorization": "Bearer " + us.getUserToken()
                 }
-            })
-                .then(function (response) {
-                    if (angular.isDefined(response.data) && angular.isObject(response.data)) {
-                        deferred.resolve(response.data);
-                    } else {
-                        deferred.reject(response);
-                    }
-                })
-                .catch(function (error) {
-                    deferred.reject(error);
-                });
+            });
+        };
 
-            return deferred.promise;
+        /**
+         * @function getWithAccount
+         * @description Gets the players with an account attached to them.
+         * @return {Promise} A promise that is resolved with the data of all the players without an account.
+         */
+        us.getWithAccount = function () {
+            return Api.quickCall("users-withaccount", undefined, {
+                headers: {
+                    "Authorization": "Bearer " + us.getUserToken()
+                }
+            });
         };
 
         /**

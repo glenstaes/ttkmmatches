@@ -8,8 +8,9 @@
 		<section layout-padding>
 			<md-card>
 				<md-tabs class="md-accent" md-dynamic-height flex>
-					<md-tab label="Zonder account" ng-if="UsersCtrl.playersWithoutAccount.length">
-						<md-content layout-padding>
+					<md-tab ng-disabled="!UsersCtrl.playersWithoutAccount.length">
+						<md-tab-label>Zonder account ({{ UsersCtrl.playersWithoutAccount.length }})</md-tab-label>
+						<md-tab-body layout-padding>
 							<table st-table="UsersCtrl.playersWithoutAccount" class="table">
 								<thead>
 									<tr>
@@ -34,18 +35,76 @@
 									</tr>
 								</tbody>
 							</table>
-						</md-content>
+						</md-tab-body>
 					</md-tab>
-					<md-tab label="VTTL">
-						<md-content layout-padding>
-							VTTL Users
-						</md-content>
-					</md-tab>	
-					<md-tab label="Sporta">
-						<md-content layout-padding>
-							Sporta Users
-						</md-content>
-					</md-tab>	
+					<md-tab>
+						<md-tab-label>VTTL ({{ UsersCtrl.playersWithAccount.VTTL.length }})</md-tab-label>
+						<md-tab-body layout-padding>
+							<table ng-if="UsersCtrl.playersWithAccount.VTTL.length" st-table="UsersCtrl.playersWithAccount.VTTL" class="table">
+								<thead>
+									<tr>
+										<th>Accounts</th>
+										<th>Acties</th>
+										<th>Lidnummer</th>
+										<th>Voornaam</th>
+										<th>Familienaam</th>
+										<th>Klassement</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="player in UsersCtrl.playersWithAccount.VTTL">
+										<td>
+											<i class="clickable fa fa-eye"></i> ({{ player.accounts.length }})
+										</td>
+										<td>
+											<i ng-click="UsersCtrl.openNewAccountDialog(player)" class="clickable fa fa-user-plus"></i>
+										</td>
+										<td>{{ player.uniqueIndex }}</td>
+										<td>{{ player.firstName }}</td>
+										<td>{{ player.lastName }}</td>
+										<td>{{ player.ranking }}</td>
+									</tr>
+								</tbody>
+							</table>
+							<div ng-if="!UsersCtrl.playersWithAccount.VTTL.length" class="alert alert-danger" role="alert">
+								Er zijn geen spelers gevonden.
+							</div>
+						</md-tab-body>
+					</md-tab>
+					<md-tab>
+						<md-tab-label>Sporta ({{ UsersCtrl.playersWithAccount.Sporta.length }})</md-tab-label>
+						<md-tab-body layout-padding>
+							<table ng-if="UsersCtrl.playersWithAccount.Sporta.length" st-table="UsersCtrl.playersWithAccount.Sporta" class="table">
+								<thead>
+									<tr>
+										<th>Accounts</th>
+										<th>Acties</th>
+										<th>Lidnummer</th>
+										<th>Voornaam</th>
+										<th>Familienaam</th>
+										<th>Klassement</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="player in UsersCtrl.playersWithAccount.Sporta">
+										<td>
+											<i class="clickable fa fa-eye"></i> ({{ player.accounts.length }})
+										</td>
+										<td>
+											<i ng-click="UsersCtrl.openNewAccountDialog(player)" class="clickable fa fa-user-plus"></i>
+										</td>
+										<td>{{ player.uniqueIndex }}</td>
+										<td>{{ player.firstName }}</td>
+										<td>{{ player.lastName }}</td>
+										<td>{{ player.ranking }}</td>
+									</tr>
+								</tbody>
+							</table>
+							<div ng-if="!UsersCtrl.playersWithAccount.Sporta.length" class="alert alert-danger" role="alert">
+								Er zijn geen spelers gevonden.
+							</div>
+						</md-tab-body>
+					</md-tab>
 				</md-tabs>
 			</md-card>
 

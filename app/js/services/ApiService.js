@@ -21,6 +21,7 @@
             "tabtmembers": "tabt/members",
             "tabtseasons": "tabt/seasons",
             "users-newaccount": "users/newaccount",
+            "users-withaccount": "users/withaccount",
             "users-withoutaccount": "users/withoutaccount"
         };
 

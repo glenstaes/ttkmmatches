@@ -60,6 +60,9 @@
                 resolve: {
                     _withoutAccount: ["UserService", function(UserService){
                         return UserService.getWithoutAccount();
+                    }],
+                    _withAccount: ["UserService", function(UserService){
+                        return UserService.getWithAccount();
                     }]
                 }  
             }).otherwise("/");

@@ -2,6 +2,7 @@ describe("UsersController", function(){
     var UsersController, UtilityService, UserService, $mdDialog;
     var $injector, $controller, $rootScope;
     var playersWithoutAccount = [{ id: 1 }];
+    var playersWithAccount = [{ id: 2, federationId: 1 }];
 
     beforeEach(function(){
         module("matches");
@@ -18,13 +19,15 @@ describe("UsersController", function(){
             UsersController = $controller("UsersController", {
                 UtilityService: UtilityService,
                 UserService: UserService,
-                _withoutAccount: playersWithoutAccount
+                _withoutAccount: playersWithoutAccount,
+                _withAccount: playersWithAccount
             });
         });
     });
 
     it("should do stuff upon initilization", function(){
         expect(UsersController.playersWithoutAccount).toEqual(playersWithoutAccount);
+        expect(UsersController.playersWithAccount).toEqual({ VTTL: [{ id: 2, federationId: 1 }], Sporta: [] });
     });
 
     describe("openNewAccountDialog", function(){
@@ -42,12 +45,14 @@ describe("UsersController", function(){
     describe("refreshLists", function(){
         beforeEach(function(){
             spyOn(UserService, "getWithoutAccount").and.callThrough();
+            spyOn(UserService, "getWithAccount").and.callThrough();
         });
 
         it("should refresh all the lists", function(){
             UsersController.refreshLists();
 
             expect(UserService.getWithoutAccount).toHaveBeenCalled();
+            expect(UserService.getWithAccount).toHaveBeenCalled();
         });
     })
 });
